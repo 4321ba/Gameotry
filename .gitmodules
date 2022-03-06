@@ -1,3 +1,6 @@
 [submodule "PDCurses"]
 	path = PDCurses
 	url = https://github.com/wmcbrine/PDCurses
+[submodule "PDCursesMod"]
+	path = PDCursesMod
+	url = https://github.com/Bill-Gray/PDCursesMod
