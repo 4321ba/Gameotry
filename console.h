@@ -30,6 +30,7 @@ public:
     static const int KEY_LEFT = 0x104;  /* Left arrow key */
     static const int KEY_RIGHT = 0x105; /* Right arrow key */
     static const int KEY_HOME = 0x106;  /* home key */
+    enum Block { BLOCK_EMPTY, BLOCK_DOWN, BLOCK_UP, BLOCK_FULL };
 private:
     struct keyCodes;
     int trCode(int code, keyCodes* kt);
@@ -52,7 +53,7 @@ public:
     
     /// @return hogy vár-e a bemeneten karakter lekezelésre, a billentyűzet meg lett-e nyomva
     bool kbhit();
-
+    
     /// Képernyő törlés
     void clrscr();
 
@@ -71,6 +72,10 @@ public:
     /// @param x - vonal vízszintes kezdő pozíciója
     void hMeter(double value, double max, int width = 70,
                             const char* txt = 0, int y = 0, int x = 0);
+    
+    /// ad egy dobozt: " ", "▄", "▀" vagy "█"
+    static const char* getblock(Block b);
+    
 };
 
 #endif // CONSOLE_H

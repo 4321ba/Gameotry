@@ -15,9 +15,8 @@ class Circle: public Shape {
     Vector center;//TODO const?
     double radius;
 public:
-    Circle(Vector center, Vector arc_point): center(center) {
-        radius = center.distance_to(arc_point);
-    }
+    Circle(Vector center, Vector arc_point):
+        center(center), radius(center.distance_to(arc_point)) { }
     
     Vector get_center() const { return center; }
     //double get_radius() const { return radius; }

@@ -7,6 +7,7 @@ using std::endl;
 
 #include "vectormath.hpp"
 #include "shapes.hpp"
+#include "console.h"
 
 class Screen {
     static const int height = 80, width = 120; // height legyen 2-vel osztható!
@@ -26,6 +27,7 @@ public:
             throw std::range_error("Vector is not on screen!");//TODO vhogy máshogy (?)
         data[x_coord][y_coord] = true;
     }
+    
     void draw_shape(const Shape& s) {
         for (int x = 0; x < width; ++x)
             for (int y = 0; y < height; ++y)
@@ -38,8 +40,7 @@ public:
             for (int x = 0; x < width; ++x) {
                 bool up = data[x][2 * y];
                 bool down = data[x][2 * y + 1];
-                const char *boxes[] = {" ", "▄", "▀", "█"};
-                out << boxes[2 * up + down];
+                out << Console::getblock((Console::Block)(2 * up + down));
             }
             out << '\n';
         }
@@ -62,7 +63,6 @@ using std::this_thread::sleep_for;
 using std::chrono::nanoseconds;
 using clk = std::chrono::high_resolution_clock;
 #include <cstdlib>//for random
-#include "console.h"
 
 int main() {
     srand (time(NULL));
