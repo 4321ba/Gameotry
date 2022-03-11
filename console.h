@@ -49,6 +49,9 @@ public:
     /// Ncurses-szerű inputot ad.
     /// @return olvasott karakter kódja a speciális billentyűk 256 fölé kerülnek
     int getch();
+    
+    /// @return hogy vár-e a bemeneten karakter lekezelésre, a billentyűzet meg lett-e nyomva
+    bool kbhit();
 
     /// Képernyő törlés
     void clrscr();

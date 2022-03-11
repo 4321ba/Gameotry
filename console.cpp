@@ -15,6 +15,7 @@
 #elif defined(_UNIX)
   #include <termios.h>    //termios, TCSANOW, ECHO, ICANON
   #include <unistd.h>     //STDIN_FILENO
+  #include <sys/ioctl.h>  //ioctl, FIONREAD
 #endif
 #include <cstdio>
 
@@ -61,6 +62,13 @@ int _getch() {
     char c;
     std::cin >> std::noskipws >> c;
     return c;
+}
+
+/// https://stackoverflow.com/questions/29335758/using-kbhit-and-getch-on-linux
+bool _kbhit() {
+    int bytes_waiting;
+    ioctl(0, FIONREAD, &bytes_waiting);
+    return bytes_waiting > 0;
 }
 
 /// Ide menti el a konzol beállítását, hogy vissza tudja állítani kilépésnél.
@@ -133,6 +141,9 @@ int Console::getch() {
     #undef C
     return ch;
 }
+
+/// @return hogy vár-e a bemeneten karakter lekezelésre
+bool Console::kbhit() { return ::_kbhit(); }
 
 /// Képernyő törlés
 void Console::clrscr() { ::clrscr(); }

@@ -61,13 +61,16 @@ ostream& operator << (ostream& out, const Screen& s) {
 using std::this_thread::sleep_for;
 using std::chrono::nanoseconds;
 using clk = std::chrono::high_resolution_clock;
-//#include <cstdio>
-#include <unistd.h>//https://stackoverflow.com/questions/21197977/how-can-i-prevent-scanf-to-wait-forever-for-an-input-character
-#include <poll.h>
 #include <cstdlib>//for random
+#include "console.h"
 
 int main() {
     srand (time(NULL));
+
+    Console& con = Console::con();
+    con.clrscr();
+    
+    
     int y_offset = rand() % 40;
     double spike_x = -100;
     Vector bird_pos = Vector(20, 0);
@@ -76,11 +79,9 @@ int main() {
     clk::time_point previously = clk::now();
     while(true) {
         Screen screen;
-        
-        struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI, 0 };
-        char c;
-        if( poll(&mypoll, 1, 0) ) {
-            scanf("%c", &c);
+        char c = 0;
+        if (con.kbhit()) {
+            c = con.getch();
             bird_velocity = Vector(0, -0.6);
         }
         
@@ -101,14 +102,15 @@ int main() {
         if (spike1.intersects_with(bird) or spike2.intersects_with(bird))
             return 0;
         
-        cout << "\x1B[H";//https://www2.ccs.neu.edu/research/gpc/VonaUtils/vona/terminal/vtansi.htm
+        con.gotoxy(0, 0);
         cout << screen;
         
         
         clk::time_point now = clk::now();
         nanoseconds delta = now - previously;
         previously = now;
-        cout << "mspt: " << 1000000.0/delta.count() << endl;
+        cout << "mspt: " << 1000000.0/delta.count() << " " << c << endl;
+        
         
         constexpr long int fps = 60;
         constexpr long int max_nspt = 1000000000 / fps;
