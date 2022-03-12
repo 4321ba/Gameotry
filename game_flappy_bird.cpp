@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdlib> // for random
+#include <ctime>
 
 #include "shapes.hpp"
 #include "screen.h"

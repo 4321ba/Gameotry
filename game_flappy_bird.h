@@ -7,7 +7,7 @@
 class GameFlappyBird: public Game {
     const Vector gravity = Vector(0, 60); // block per sec^2
     const Vector jump_speed = Vector(0, -40); // block per sec
-    const double spike_x_speed = -60; // block per sec
+    const double spike_x_speed = -45; // block per sec
     
     double spike_x;
     int spike_y_offset;
