@@ -7,7 +7,7 @@ class Circle;
 
 class Shape {
 public:
-    virtual bool has_point(Vector p) const = 0;//??
+    virtual bool has_point(Vector p) const = 0;//?? TODO
     virtual bool intersects_with(const Circle& c) const = 0;
 };
 

@@ -2,9 +2,7 @@
 #define VECTORMATH_H
 
 #include <cmath>
-
 #include <iostream>
-using std::ostream;
 
 constexpr double MATH_PI = 3.14159265358979323846;
 
@@ -50,7 +48,7 @@ struct Vector {
     }
 };
 
-inline ostream& operator << (ostream& out, const Vector& v) {
+inline std::ostream& operator << (std::ostream& out, const Vector& v) {
     out << "Vector(" << v.x << ", " << v.y << ")";
     return out;
 }
@@ -63,7 +61,7 @@ struct Segment {
     Vector closest_point_to(Vector p) const;
 };
 
-inline ostream& operator << (ostream& out, const Segment& s) {
+inline std::ostream& operator << (std::ostream& out, const Segment& s) {
     out << "Segment(" << s.a << ", " << s.b << ")";
     return out;
 }
