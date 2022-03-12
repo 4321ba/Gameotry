@@ -19,10 +19,8 @@ using std::endl;
 using std::this_thread::sleep_for;
 using std::chrono::nanoseconds;
 using clk = std::chrono::high_resolution_clock;
-#include <cstdlib>//for random
 
 int main() {
-    srand(time(NULL));
 
     Console& con = Console::con();
     con.clrscr();
@@ -32,60 +30,29 @@ int main() {
     
     clk::time_point previous = clk::now();
     clk::time_point previousfps = previous;
-    long int remainder = 0; // nanoseconds for physics update remaining from before last frame
-    long int prevvait = 0;
+    long int wait = 0;
     int frames = 0;
     int currfps = 0;
     bool exit = false;
     while(!exit) {
-        /*
-        while (con.kbhit())
-            game.input(con.getch());
-        
-        constexpr long int physics_fps = 60; // tick per second
-        constexpr long int nspt = 1000000000 / physics_fps; // nanosecond per tick
-        
-        clk::time_point now = clk::now();
-        long int ns_delta = (now - previous).count();
-        previous = now;
-        long int physics_delta = ns_delta + remainder;
-        remainder = physics_delta % nspt;
-        
-        for (int i = 0; i < physics_delta / nspt; ++i) {
-            exit = game.tick_physics(1.0 / physics_fps);
-            cout <<"            \r" << i;
-        }
-        
-        con.gotoxy(1, 1);
-        game.draw_frame();
-        if (ns_delta - nspt > 0)
-            sleep_for(nanoseconds(ns_delta - nspt));
-        */
-        
-        
-        
-        
-        
-        
-        
         
         constexpr long int fps = 60;
         constexpr long int max_nspt = 1000000000 / fps;
-        while (con.kbhit())
-            game.input(con.getch());
-        
-        for (int i = 0; i < remainder / max_nspt and not exit; ++i)
-            exit = game.tick_physics(1.0);
-        remainder %= max_nspt;
-        
-        con.gotoxy(1, 1);
-        game.draw_frame();
-        ++frames;
         
         clk::time_point now = clk::now();
-        nanoseconds delta = now - previous;
+        long int delta = ((nanoseconds)(now - previous)).count();
         previous = now;
-        cout << "time since prev now: " << delta.count() / 1000000.0 << endl;
+        cout << "time since prev now (=delta): " << delta / 1000000.0 << endl;
+        
+        while (con.kbhit())
+            game.input(con.getch());
+        con.gotoxy(1, 1);
+        double passed_delta = wait > 0 ? 1.0 / fps : delta / 1000000000.0;
+        exit = game.update(passed_delta);
+        ++frames;
+        
+        
+        
         
         if (((nanoseconds)(now - previousfps)).count() > 1000000000.0) {
             previousfps = now;
@@ -95,17 +62,13 @@ int main() {
         cout << "fps: " << currfps << endl;
         
         
-        nanoseconds wait = nanoseconds(max_nspt + prevvait) - delta;
-        prevvait = wait.count();
-        cout << "waiting for this long: " << prevvait / 1000000.0 << endl;
+        wait = max_nspt - (delta - /*previous*/wait);
+        wait = wait > 0 ? wait : 0;
+        cout << "waiting for this long: " << wait / 1000000.0 <<"                    "<< endl;
         
         
-        if (prevvait > 0)
-            sleep_for(nanoseconds(prevvait));
-        remainder += prevvait > 0 ? max_nspt : delta.count();
-        //remainder += delta.count();
-        
-        
+        if (wait > 0)
+            sleep_for(nanoseconds(wait));
         
         
     }

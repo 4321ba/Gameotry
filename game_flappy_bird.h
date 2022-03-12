@@ -1,25 +1,24 @@
 #ifndef GAME_FLAPPY_BIRD_H
 #define GAME_FLAPPY_BIRD_H
 
-#include <cstdlib> // rand
-
 #include "vectormath.hpp"
 #include "game.h"
 
 class GameFlappyBird: public Game {
+    const Vector gravity = Vector(0, 60); // block per sec^2
+    const Vector jump_speed = Vector(0, -40); // block per sec
+    const double spike_x_speed = -60; // block per sec
+    
     double spike_x;
     int spike_y_offset;
     Vector bird_pos;
     Vector bird_velocity;
-    const Vector gravity = Vector(0, 0.01);
-    void randomize_spike_height() { spike_y_offset = rand() % 40; }
+    
+    void randomize_spike_height();
 public:
-    GameFlappyBird(): spike_x(-100), bird_pos(20, 0), bird_velocity(0, 0) {
-        randomize_spike_height();
-    }
+    GameFlappyBird();
     void input(int code);
-    void draw_frame();
-    bool tick_physics(double delta);
+    bool update(double delta);
 };
 
 #endif // GAME_FLAPPY_BIRD_H
