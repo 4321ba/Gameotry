@@ -5,13 +5,24 @@
 #include "shapes.hpp"
 
 class Screen {
-    static const int height = 80, width = 120; // height legyen 2-vel osztható!
-    bool data[width][height];
+    const unsigned width, height;
+    bool* data;
+    
+    bool& idx(unsigned x, unsigned y);
+    bool idx(unsigned x, unsigned y) const;
+    
+    // we don't allow these
+    Screen(const Screen&);
+    Screen& operator=(const Screen&);
 public:
-    Screen();
+    // this is what it looks like from the outside (so that it's resolution independent)
+    static const Vector size;
+    Screen(unsigned w/*idth*/, unsigned h/*eight*/); // height will be made divisible by 2
+    ~Screen() { delete[] data; }
     void draw_vector(const Vector& v);
     void draw_shape(const Shape& s);
     void render(std::ostream& out) const;
+    void clear();
 };
 
 inline std::ostream& operator << (std::ostream& out, const Screen& s) {

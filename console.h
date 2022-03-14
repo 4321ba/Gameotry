@@ -63,6 +63,9 @@ public:
     /// @param y - függőleges pozíció (1..24?)
     void gotoxy(int x, int y);
 
+    /// Maximum képernyő méret lekérdezés
+    void getsize(int& x, int& y);
+    
     /// Valós érték nagyságának megjelenítése egy vízszintes vonallal
     /// @param value - érték
     /// @param max - érték maximuma

@@ -45,6 +45,16 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(hstdout, dwCursorPosition);
 }
 
+// https://stackoverflow.com/questions/6812224/getting-terminal-size-in-c-for-windows
+void getsize(int& x, int& y) {
+    HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(hstdout, &csbi)) {
+        x = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+        y = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    }
+}
+
 #elif  defined(_UNIX)
 
 /// Kihasználjuk, hogy ANSI terminál
@@ -55,6 +65,14 @@ void clrscr() {
 /// Kihasználjuk, hogy ANSI terminál
 void gotoxy(int x, int y) {
     std::cout << "\x1b[" << y << ';' << x << 'H';
+}
+
+// https://stackoverflow.com/questions/6812224/getting-terminal-size-in-c-for-windows
+void getsize(int& x, int& y) {
+    struct winsize max;
+    ioctl(0, TIOCGWINSZ , &max);
+    x = max.ws_col;
+    y = max.ws_row;
 }
 
 /// skipws kikapcsolása fontos!
@@ -147,6 +165,9 @@ bool Console::kbhit() { return ::_kbhit(); }
 
 /// Képernyő törlés
 void Console::clrscr() { ::clrscr(); }
+
+/// Maximum képernyő méret lekérdezés
+void Console::getsize(int& x, int& y) { ::getsize(x, y); }
 
 /// Pozicionálás a képernyőn
 /// (1,1) a kezdő pozíció a bal felső sarok
