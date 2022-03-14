@@ -18,7 +18,6 @@ using std::chrono::nanoseconds;
 using clk = std::chrono::high_resolution_clock;
 
 int main() {
-
     Console& con = Console::con();
     con.clrscr();
     
@@ -26,7 +25,7 @@ int main() {
     Game& game = fb;
     
     clk::time_point previous = clk::now();
-    clk::time_point previousfps = previous;
+    long int fps_display_delta = 0;
     int frames = 0;
     int currfps = 0;
     bool exit = false;
@@ -41,9 +40,10 @@ int main() {
         con.gotoxy(1, 1);
         exit = game.update(delta / 1000000000.0);
         ++frames;
+        fps_display_delta += delta;
         
-        if (((nanoseconds)(now - previousfps)).count() > 1000000000.0) {
-            previousfps = now;
+        if (fps_display_delta >= 1000000000) {
+            fps_display_delta = 0;
             currfps = frames;
             frames = 0;
         }
