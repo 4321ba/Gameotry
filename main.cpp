@@ -14,45 +14,56 @@ using std::flush;
 
 #include "game_flappy_bird.h"
 
+const double SECONDS_PER_GAME = 10.0;
+
+// @return true, if the timer ran out, false if player died or quit
+bool play_game(Game& game, Console& con) {
+    clock_t previous = clock();
+    double game_timeout_delta = 0.0;
+    double fps_display_delta = 0.0;
+    int counted_frames = 0;
+    int displayed_fps = 0;
+    bool quit = false;
+    while(!quit) {
+        clock_t now = clock();
+        double delta = (double)(now - previous) / CLOCKS_PER_SEC;
+        previous = now;
+        
+        while (con.kbhit()) {
+            int c = con.getch();
+            if (c == 'q')
+                quit = true;
+            else
+                game.input(c);
+        }
+        
+        con.gotoxy(1, 1);
+        quit = game.update(delta) || quit;
+        cout << "fps: " << displayed_fps << ", mspt: " << 1000.0 * delta << flush;
+        
+        ++counted_frames;
+        fps_display_delta += delta;
+        if (fps_display_delta >= 1.0) {
+            fps_display_delta = 0.0;
+            displayed_fps = counted_frames;
+            counted_frames = 0;
+        }
+        game_timeout_delta += delta;
+        if (game_timeout_delta >= SECONDS_PER_GAME)
+            break;
+        
+    }
+    con.clrscr();
+    con.gotoxy(1, 1);
+    return !quit;
+}
 
 int main() {
     Console& con = Console::con();
     con.clrscr();
     
     GameFlappyBird fb;
-    Game& game = fb;
-    
-    clock_t previous = clock();
-    long int fps_display_delta = 0;
-    int counted_frames = 0;
-    int displayed_fps = 0;
-    bool exit = false;
-    while(!exit) {
-        clock_t now = clock();
-        long int delta = now - previous;
-        previous = now;
-        double delta_sec = (double)delta / CLOCKS_PER_SEC;
-        
-        while (con.kbhit()) {
-            int c = con.getch();
-            if (c == 'q') exit = true;
-            else game.input(c);
-        }
-        
-        con.gotoxy(1, 1);
-        exit = game.update(delta_sec) || exit;
-        
-        ++counted_frames;
-        fps_display_delta += delta;
-        if (fps_display_delta >= CLOCKS_PER_SEC) {
-            fps_display_delta = 0;
-            displayed_fps = counted_frames;
-            counted_frames = 0;
-        }
-        
-        cout << "fps: " << displayed_fps << ", mspt: " << 1000.0 * delta_sec << flush;
-    }
-    con.clrscr();
-    con.gotoxy(1, 1);
+    bool success = play_game(fb, con);
+    cout << (success ? "Success!" : "Failure...") << endl;
 }
 
