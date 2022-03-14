@@ -36,7 +36,7 @@ bool GameFlappyBird::update(double delta) {
     screen.draw_shape(bird);
     screen.draw_shape(spike1);
     screen.draw_shape(spike2);
-    std::cout << spike_x << "\n";
+    //std::cout << spike_x << "\n";
     std::cout << screen;
     return (spike1.intersects_with(bird) or spike2.intersects_with(bird));
 }

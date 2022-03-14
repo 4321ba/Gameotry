@@ -4,6 +4,9 @@ using std::cin;
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::flush;
+
+#include <ctime>
 
 #include "vectormath.hpp"
 #include "shapes.hpp"
@@ -11,11 +14,6 @@ using std::endl;
 
 #include "game_flappy_bird.h"
 
-// https://stackoverflow.com/questions/41077377/how-to-get-current-time-in-milliseconds
-// http://www.cplusplus.com/reference/chrono/
-#include <chrono>
-using std::chrono::nanoseconds;
-using clk = std::chrono::high_resolution_clock;
 
 int main() {
     Console& con = Console::con();
@@ -24,32 +22,37 @@ int main() {
     GameFlappyBird fb;
     Game& game = fb;
     
-    clk::time_point previous = clk::now();
+    clock_t previous = clock();
     long int fps_display_delta = 0;
-    int frames = 0;
-    int currfps = 0;
+    int counted_frames = 0;
+    int displayed_fps = 0;
     bool exit = false;
     while(!exit) {
-        clk::time_point now = clk::now();
-        long int delta = ((nanoseconds)(now - previous)).count();
+        clock_t now = clock();
+        long int delta = now - previous;
         previous = now;
-        cout << "time since prev now (=delta): " << delta / 1000000.0 << endl;
+        double delta_sec = (double)delta / CLOCKS_PER_SEC;
         
-        while (con.kbhit())
-            game.input(con.getch());
-        con.gotoxy(1, 1);
-        exit = game.update(delta / 1000000000.0);
-        ++frames;
-        fps_display_delta += delta;
-        
-        if (fps_display_delta >= 1000000000) {
-            fps_display_delta = 0;
-            currfps = frames;
-            frames = 0;
+        while (con.kbhit()) {
+            int c = con.getch();
+            if (c == 'q') exit = true;
+            else game.input(c);
         }
-        cout << "fps: " << currfps << endl;
         
+        con.gotoxy(1, 1);
+        exit = game.update(delta_sec) || exit;
         
+        ++counted_frames;
+        fps_display_delta += delta;
+        if (fps_display_delta >= CLOCKS_PER_SEC) {
+            fps_display_delta = 0;
+            displayed_fps = counted_frames;
+            counted_frames = 0;
+        }
+        
+        cout << "fps: " << displayed_fps << ", mspt: " << 1000.0 * delta_sec << flush;
     }
+    con.clrscr();
+    con.gotoxy(1, 1);
 }
 
