@@ -22,9 +22,9 @@ Vector Segment::closest_point_to(Vector p) const { // result is between a and b
     Vector ap = p - a;
     double dot = ab * ap;
     double lerp_weight = dot / a.distance_squared_to(b);
-    if (lerp_weight < 0)
+    if (lerp_weight <= 0)
         return a;
-    if (lerp_weight > 1)
+    if (lerp_weight >= 1)
         return b;
     return a + ab * lerp_weight;
 }

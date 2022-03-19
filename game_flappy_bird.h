@@ -2,6 +2,7 @@
 #define GAME_FLAPPY_BIRD_H
 
 #include "vectormath.hpp"
+#include "screen.h"
 #include "game.h"
 
 class GameFlappyBird: public Game {

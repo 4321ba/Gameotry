@@ -7,7 +7,7 @@
 constexpr double MATH_PI = 3.14159265358979323846;
 
 struct Vector {
-    double x, y;//TODO priváttá ha nem kell igazából? meh, de lehet getterekkel megúszom
+    double x, y;
     
     static const Vector UP, DOWN, LEFT, RIGHT;
     
@@ -36,7 +36,7 @@ struct Vector {
     double angle_to(Vector v) const {
         return atan2(y - v.y, x - v.x);
     }
-    void rotate(double angle) {
+    void rotate(double angle) { // radian ofc, (right=0,) clockwise=positive
         double temp = x;
         x = temp * cos(angle) - y * sin(angle);
         y = temp * sin(angle) + y * cos(angle);
@@ -56,7 +56,7 @@ inline std::ostream& operator << (std::ostream& out, const Vector& v) {
 // represents a segment, or a line
 struct Segment {
     Vector a, b; // 2 endpoints
-    Segment(Vector a, Vector b): a(a), b(b) { }
+    Segment(Vector a, Vector b): a(a), b(b) { } // TODO a és b nem ugyanaz?
     bool is_point_to_the_left(Vector p) const;
     Vector closest_point_to(Vector p) const;
 };

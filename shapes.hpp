@@ -7,7 +7,7 @@ class Circle;
 
 class Shape {
 public:
-    virtual bool has_point(Vector p) const = 0;//?? TODO
+    virtual bool has_point(Vector p) const = 0;
     virtual bool intersects_with(const Circle& c) const = 0;
 };
 
@@ -36,7 +36,7 @@ class /*Regular*/Polygon: public Shape {
     Segment closest_edge_to(Vector p) const;
     
 public:
-    Polygon(Vector center, Vector vertex, int vertex_count):
+    Polygon(Vector center, Vector vertex, int vertex_count): // TODO vertex_count>=3??
         center(center), vertex(vertex), vertex_count(vertex_count) { }
     
     bool has_point(Vector p) const {
