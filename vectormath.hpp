@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <stdexcept>
 
 constexpr double MATH_PI = 3.14159265358979323846;
 
@@ -11,6 +12,7 @@ struct Vector {
     
     static const Vector UP, DOWN, LEFT, RIGHT;
     
+    Vector() { } // ne legyen felesleges =0 értékadás!, mint ahogy `int x;` -nél sincs
     Vector(double x, double y): x(x), y(y) { }
 
     Vector operator + (Vector other) const {
@@ -46,24 +48,30 @@ struct Vector {
         diff.rotate(angle);
         *this = c + diff;
     }
+    friend std::istream& operator>>(std::istream& in, Vector& v);
 };
 
-inline std::ostream& operator << (std::ostream& out, const Vector& v) {
-    out << "Vector(" << v.x << ", " << v.y << ")";
-    return out;
+inline std::istream& operator>>(std::istream& in, Vector& v) {
+    return in >> v.x >> v.y;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const Vector& v) {
+    return out << "Vector(" << v.x << ", " << v.y << ")";
 }
 
 // represents a segment, or a line
 struct Segment {
     Vector a, b; // 2 endpoints
-    Segment(Vector a, Vector b): a(a), b(b) { } // TODO a és b nem ugyanaz?
+    Segment(Vector a, Vector b): a(a), b(b) {
+        if (a.x == b.x && a.y == b.y)
+            throw std::runtime_error("2 endpoints of a segment cannot be the same!");
+    }
     bool is_point_to_the_left(Vector p) const;
     Vector closest_point_to(Vector p) const;
 };
 
-inline std::ostream& operator << (std::ostream& out, const Segment& s) {
-    out << "Segment(" << s.a << ", " << s.b << ")";
-    return out;
+inline std::ostream& operator<<(std::ostream& out, const Segment& s) {
+    return out << "Segment(" << s.a << ", " << s.b << ")";
 }
 
 #endif // VECTORMATH_H

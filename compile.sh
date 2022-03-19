@@ -1,2 +1,2 @@
 #!/bin/sh
-g++ *.cpp -o gameotry -Wall -Wextra -Wpedantic
+g++ *.cpp -o gameotry -Wall -Wextra -Wpedantic $@

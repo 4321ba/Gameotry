@@ -6,7 +6,7 @@
 
 #include "shapes.hpp"
 
-GameFlappyBird::GameFlappyBird(): spike_x(-42), bird_pos(Screen::size.x*0.125, 6), bird_velocity(0, 0) {
+GameFlappyBird::GameFlappyBird(): spike_x(-42), bird_pos(Screen::size.x*0.125, Screen::size.y*0.3), bird_velocity(0, 0) {
     randomize_spike_height();
 }
 
@@ -32,5 +32,10 @@ bool GameFlappyBird::update(double delta, Screen& screen) {
     screen.draw_shape(bird);
     screen.draw_shape(spike_1);
     screen.draw_shape(spike_2);
-    return spike_1.intersects_with(bird) or spike_2.intersects_with(bird);
+    screen.draw_shape(upper_wall); // TODO valami a performance-szel itt bűzlik, 60fps->120fps 2 sort kikommentelve
+    screen.draw_shape(lower_wall);
+    return spike_1.intersects_with(bird)
+        or spike_2.intersects_with(bird)
+        or upper_wall.intersects_with(bird)
+        or lower_wall.intersects_with(bird);
 }

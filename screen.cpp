@@ -27,7 +27,7 @@ Screen::Screen(unsigned w, unsigned h): width(w), height(h - h % 2) {
     clear();
 }
 
-void Screen::draw_vector(const Vector& v) {// TODO remove
+void Screen::draw_vector(const Vector& v) {// TODO remove, nem is jó / tesztelt
     unsigned x_coord = v.x / size.x * width;
     unsigned y_coord = v.y / size.y * height;
     idx(x_coord, y_coord) = true;
@@ -47,9 +47,9 @@ void Screen::draw_shape(const Shape& s) {
         max_width -= start_x;
     }
     for (unsigned x = start_x; x < max_width; ++x) {
-        double x_coord = size.x * (x - start_x) / (max_width - start_x);
+        double x_coord = size.x * (0.5 /*for rounding*/ + x - start_x) / (max_width - start_x);
         for (unsigned y = start_y; y < max_height; ++y) {
-            double y_coord = size.y * (y - start_y) / (max_height - start_y);
+            double y_coord = size.y * (0.5 /*for rounding*/ + y - start_y) / (max_height - start_y);
             if (s.has_point(Vector(x_coord, y_coord)))
                 idx(x, y) = true;
         }
