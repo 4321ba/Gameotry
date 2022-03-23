@@ -8,7 +8,7 @@
 class ShapeParser {
 public:
     DynArray<Shape*> array;
-    ShapeParser(std::istream& is);
+    ShapeParser(std::istream&& is);
     ~ShapeParser();
 };
 

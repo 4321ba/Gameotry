@@ -19,8 +19,8 @@ void GameFlappyBird::input(int /*code*/) {
 }
 
 bool GameFlappyBird::update(double delta, Screen& screen) {
-    bird_velocity = bird_velocity + gravity * delta;
-    bird_pos = bird_pos + bird_velocity * delta;
+    bird_velocity += gravity * delta;
+    bird_pos += bird_velocity * delta;
     spike_x += spike_x_speed * delta;
     if (spike_x < -Screen::size.x * 0.4) {
         spike_x = Screen::size.x * 1.4;
@@ -32,7 +32,7 @@ bool GameFlappyBird::update(double delta, Screen& screen) {
     screen.draw_shape(bird);
     screen.draw_shape(spike_1);
     screen.draw_shape(spike_2);
-    screen.draw_shape(upper_wall); // TODO valami a performance-szel itt bűzlik, 60fps->120fps 2 sort kikommentelve
+    screen.draw_shape(upper_wall);
     screen.draw_shape(lower_wall);
     return spike_1.intersects_with(bird)
         or spike_2.intersects_with(bird)

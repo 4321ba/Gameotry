@@ -1,6 +1,6 @@
 #include "shape_parser.h"
 
-ShapeParser::ShapeParser(std::istream& is) {
+ShapeParser::ShapeParser(std::istream&& is) {
     unsigned type; // 0: Circle, 3 or above: RegularPolygon
     while (is >> type) {
         if (type==1 && type==2) {

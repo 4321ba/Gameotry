@@ -18,6 +18,11 @@ struct Vector {
     Vector operator + (Vector other) const {
         return Vector(x + other.x, y + other.y);
     }
+    Vector& operator += (Vector other) {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
     Vector operator - (Vector other) const {
         return Vector(x - other.x, y - other.y);
     }

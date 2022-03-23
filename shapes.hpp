@@ -65,6 +65,9 @@ public:
         center(center), vertex(vertex), vertex_count(vc > 3 ? vc : 3) { }
     
     bool has_point(Vector p) const {
+        // for performance reasons:
+        if (center.distance_squared_to(vertex) < center.distance_squared_to(p))
+            return false;
         return closest_edge_to(p).is_point_to_the_left(p);
     }
     

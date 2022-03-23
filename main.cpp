@@ -20,8 +20,9 @@ using std::flush;
 #include "shape_parser.h"
 
 #include "game_flappy_bird.h"
+#include "game_snake.h"
 
-const double SECONDS_PER_GAME = 10.0;
+const double SECONDS_PER_GAME = 20.0;
 
 int main() {
     srand(time(NULL));
@@ -31,12 +32,13 @@ int main() {
     int width = 80, height = 25;
     con.getsize(width, height);
     Screen screen(width, 2 * (height - 1/*for fps count*/));
-    GameFlappyBird fb;
-    bool success = fb.play(con, screen, SECONDS_PER_GAME);
+//     GameFlappyBird game;
+    GameSnake game;
+    bool success = game.play(con, screen, SECONDS_PER_GAME);
     cout << (success ? "Success!" : "Failure...") << endl;
     
 //     std::ifstream f("snake_level.txt");
-//     ShapeParser p(f);
+//     ShapeParser p(std::move(f));
 //     for (size_t i = 0; i < p.array.len(); ++i)
 //         screen.draw_shape(*p.array[i]);
 //     cout << screen;
