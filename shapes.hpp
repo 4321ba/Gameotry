@@ -5,7 +5,7 @@
 #include "vectormath.hpp"
 
 class Circle;
-
+// TODO operator== a teszthez
 class Shape {
 public:
     virtual bool has_point(Vector p) const = 0;

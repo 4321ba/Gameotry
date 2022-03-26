@@ -24,7 +24,7 @@ public:
         *this = other;
     }
     
-    DynArray& operator=(const DynArray& other) {
+    DynArray& operator=(const DynArray& other) {//TODO kell ez?
         delete[] data;
         length = other.length;
         size = other.size;

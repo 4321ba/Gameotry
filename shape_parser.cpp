@@ -13,8 +13,9 @@ ShapeParser::ShapeParser(std::istream&& is) {
         else
             s = new Polygon(type);
         is >> *s;
-        std::cout << *s << std::endl;//temp TODO
+        //std::cout << *s << std::endl;//temp TODO
         array.append(s);
+        // TODO valahogy jelezni a hívónak, ha rosszkor jött a fájl vége / a formátum jó volt de a számok száma nem
     }
 }
 

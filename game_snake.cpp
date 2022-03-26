@@ -13,7 +13,7 @@ GameSnake::GameSnake(): shape_parser(std::ifstream("snake_level.txt")), delta_si
 }
 
 void GameSnake::input(int code) {
-    switch (code) {
+    switch (code) { // TODO wasd
         case Console::KEY_LEFT : forward = Vector::LEFT ; break;
         case Console::KEY_RIGHT: forward = Vector::RIGHT; break;
         case Console::KEY_UP   : forward = Vector::UP   ; break;
