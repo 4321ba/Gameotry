@@ -22,12 +22,13 @@ using std::flush;
 
 #include "game_flappy_bird.h"
 #include "game_snake.h"
+#include "game_asteroids.h"
 
-const double SECONDS_PER_GAME = 20.0;
 
-#define READ_FILE // kikommentelendő? TODO: külön fájlba + 3. fájl a teszt
+//#define READ_FILE // kikommentelendő? TODO: külön fájlba + 3. fájl a teszt
 
 #ifndef READ_FILE
+const double SECONDS_PER_GAME = 20.0;
 int main() {
     srand(time(NULL));
     Console& con = Console::con();
@@ -37,7 +38,8 @@ int main() {
     con.getsize(width, height);
     Screen screen(width, 2 * (height - 1/*for fps count*/));
 //     GameFlappyBird game;
-    GameSnake game;
+//    GameSnake game;
+    GameAsteroids game;
     bool success = game.play(con, screen, SECONDS_PER_GAME);
     cout << (success ? "Success!" : "Failure...") << endl;
 }
@@ -45,7 +47,7 @@ int main() {
 #else
 int main() {
     std::ifstream f("snake_level.txt");
-    ShapeParser p(std::move(f));//TODO ellenőrzés??
+    ShapeParser p(std::move(f));//TODO ellenőrzés?? TODO predikátum a shapeparsernek
     
     for (size_t i = 0; i < p.array.len(); ++i)
         cout << *p.array[i] << endl;

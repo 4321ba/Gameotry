@@ -1,8 +1,6 @@
 #include "game_snake.h"
 
-#include <iostream>
 #include <fstream>
-#include <ctime>
 
 #include "shapes.hpp"
 

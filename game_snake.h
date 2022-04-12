@@ -13,7 +13,7 @@ class GameSnake: public Game {
     
     ShapeParser shape_parser;
     double delta_since_last_jump;
-    Vector snake_pos[SNAKE_LENGTH];
+    Vector snake_pos[SNAKE_LENGTH];//TODO kígyó nőjön, dintömbnek legyen haszna
     Vector forward;
     
 public:

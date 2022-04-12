@@ -14,8 +14,9 @@ struct Vector {
     
     Vector() { } // ne legyen felesleges =0 értékadás!, mint ahogy `int x;` -nél sincs
     Vector(double x, double y): x(x), y(y) { }
+    static Vector polar(double r, double angle) { return Vector(r * cos(angle), r * sin(angle)); }
 
-    Vector operator + (Vector other) const {
+    Vector operator + (Vector other) const {//TODO conzisztens szóközök
         return Vector(x + other.x, y + other.y);
     }
     Vector& operator += (Vector other) {
@@ -53,7 +54,7 @@ struct Vector {
         diff.rotate(angle);
         *this = c + diff;
     }
-    friend std::istream& operator>>(std::istream& in, Vector& v);
+    friend std::istream& operator>>(std::istream& in, Vector& v); // TODO whyy?
 };
 
 inline std::istream& operator>>(std::istream& in, Vector& v) {
