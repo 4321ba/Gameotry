@@ -17,7 +17,7 @@ class GameSnake: public Game {
     Vector forward;
     
 public:
-    GameSnake();
+    GameSnake(std::istream& is);
     void input(int code);
     bool update(double delta, Screen& screen);
 };

@@ -1,6 +1,12 @@
-# Mi ez
+# Adatok
 
 Ezt a programot a BME mérnökinformatikus képzés Programozás alapjai 2. tárgyának nagy házi feladataként készítem.
+
+- Név: 
+- Neptun kód: 
+- Utolsó jelentős módosítás dátuma: 2022. 04. 19.
+
+A program standard C++-ban íródik (C++ 11-nek megfelelően), de opcionálisan használja a tárgy anyagából szerzett (és kibővített) Console osztályt, ami nem standard C++, de jobb parancssori élményt nyújt, és az interfésze jól definiált.
 
 # Specifikáció
 
@@ -18,7 +24,7 @@ Jobbnak tartottam a szabályos háromszög és négyzet osztályokat egybevonni 
 
 Szintén jobbnak találtam, ha az origó középpontú egységkör helyett egy bármilyen, általános, kör típusú objektumról képes eldönteni a síkidom (mindkét fajta), hogy van-e a körrel közös pontja.
 
-Az általánosság jegyében a beolvasás alatt a feladatkiírással ellentétben az összes síkidom eltárolódik, az egységkörön kívül esésre való szűrés később fog megtörténni.
+A beolvasáskor lehetőség lesz szűrni, hogy mely síkidomok tárolódjanak el, így az egységkörön kívül esésre való szűrés beolvasás alatt, a feladat szövegének megfelelően, megtörténhet.
 
 ## Bemeneti fájlformátum
 
@@ -49,9 +55,9 @@ Ahol a típus = 0 kört jelöl, a típus >= 3 szabályos n-szöget, a típus = 1
 
 Bármilyen, uintként (a típus helyén) vagy double-ként (a koordináták helyén) nem értelmezhető bemenet is érvénytelen formátum.
 
-A fájl végén egy alakzat beolvasása nem lehet folyamatban, azaz 5-tel osztható számú számnak kell lenni a fájlban.
-
 Érvénytelen formátum esetén a főprogram hibaüzenettel kilép.
+
+A fájl végén amennyiben egy alakzat beolvasása folyamatban van (azaz 5-tel nem osztható számú szám van a fájlban), akkor az utolsó, befejezetlen alakzat nem lesz beolvasva, hibaüzenet nélkül.
 
 A sortörés és szóköz felcserélhető, a lényeg a whitespace a számok között.
 
@@ -83,7 +89,7 @@ A feladatot továbbgondolva lehessen a síkidomokat felhasználni egyszerű, par
 - játékokra, amik felhasználják ezeket a lehetőségeket: például Flappy Bird, vagy Snake
 - egy alternatív főprogramra, ami a játékokat indítja a koordináta-beolvasás helyett
 
-A Snake veheti a pályát egy fájlból a fentebb leírt formátumban, emiatt is kell a beolvasást általánosítani (hogy az egységkörre való szűrés később történjen az eredeti főprogramban).
+A Snake veheti a pályát egy fájlból a fentebb leírt formátumban, emiatt is kell a beolvasást általánosítani (hogy az egységkörre való szűrés predikátummal történjen).
 
 A játékok egyszerűek, és sok minden közös bennük:
 

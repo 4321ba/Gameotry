@@ -5,7 +5,7 @@
 #include "vectormath.hpp"
 
 class Circle;
-// TODO operator== a teszthez
+// TODO operator== a tesztekhez
 class Shape {
 public:
     virtual bool has_point(Vector p) const = 0;
@@ -13,7 +13,7 @@ public:
     
     // consumes 4 doubles if it can: center.x, center.y, vertex.x, vertex.y
     virtual void read_from(std::istream& is) = 0;
-    virtual void print_to(std::ostream& os) = 0;
+    virtual void print_to(std::ostream& os) const = 0;
     virtual ~Shape() {}
 };
 
@@ -22,7 +22,7 @@ inline std::istream& operator>>(std::istream& is, Shape& s) {
     return is;
 }
 
-inline std::ostream& operator<<(std::ostream& os, Shape& s) {
+inline std::ostream& operator<<(std::ostream& os, const Shape& s) {
     s.print_to(os);
     return os;
 }
@@ -34,6 +34,8 @@ public:
     Circle() { }
     Circle(Vector center, Vector arc_point):
         center(center), radius(center.distance_to(arc_point)) { }
+    Circle(Vector center, double radius):
+        center(center), radius(radius) { } // TODO ezt használni gyakrabban
     
     Vector get_center() const { return center; }
     
@@ -48,7 +50,7 @@ public:
         is >> center >> arc_point;
         radius = center.distance_to(arc_point);
     }
-    void print_to(std::ostream& os) {
+    void print_to(std::ostream& os) const {
         os << "Circle(center = " << center << ", radius = " << radius << ")";
     }
 };
@@ -81,8 +83,8 @@ public:
     void read_from(std::istream& is) {
         is >> center >> vertex;
     }
-    void print_to(std::ostream& os) {
-        os << vertex_count <<"-gon(center = " << center << ", vertex = " << vertex << ")";
+    void print_to(std::ostream& os) const {
+        os << vertex_count << "-gon(center = " << center << ", vertex = " << vertex << ")";
     }
 };
 

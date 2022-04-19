@@ -9,7 +9,9 @@ using std::flush;
 // TODO and or not helyett && || !
 // operator >> helyett operator>>
 // is és os in és out helyett (iostream)
-// TODO console.cpp-ben külön opcióként szétválasztani az utf8 és cpmittoménmi kódolást, hogy windowson is lehessen tesztelni utf8-cal
+// TODO console.cpp-ben külön opcióként szétválasztani az utf8 és cpmittoménmi kódolást, hogy windowson is lehessen tesztelni utf8-cal (tesztprogram tesztelhessen utf8 kódokkal)
+// TODO átnevezni .hpp-ről .h -ra a headeröket
+//TODO Console fallback implementáció standard c++-szal / vagy olyan fordítási opció ahol nincs szükség rá (makrómágia)
 #include <ctime>
 #include <cstdlib> // for random
 
@@ -36,25 +38,33 @@ int main() {
     
     int width = 80, height = 25;
     con.getsize(width, height);
-    Screen screen(width, 2 * (height - 1/*for fps count*/));
+    Screen screen(width, 2 * (height - 1/*for displaying fps count*/));
 //     GameFlappyBird game;
-//    GameSnake game;
-    GameAsteroids game;
+    std::ifstream snl("snake_level.txt");
+   GameSnake game(snl);
+    if (!snl.eof())
+        return 1;
+//     GameAsteroids game;
     bool success = game.play(con, screen, SECONDS_PER_GAME);
     cout << (success ? "Success!" : "Failure...") << endl;
 }
 
 #else
+
+bool outside_of_unit_circle(const Shape& s) {
+    return !s.intersects_with(Circle(Vector(0, 0), 1.0));
+}
+
 int main() {
-    std::ifstream f("snake_level.txt");
-    ShapeParser p(std::move(f));//TODO ellenőrzés?? TODO predikátum a shapeparsernek
+    const char* filename = "snake_level.txt";
+    std::ifstream is(filename);
+    ShapeParser p(is, outside_of_unit_circle);
+    if (!is.eof()) {
+        cerr << "Invalid input format in file " << filename << endl;
+        return 1;
+    }
     
-    for (size_t i = 0; i < p.array.len(); ++i)
-        cout << *p.array[i] << endl;
-    
-    
-    //for (size_t i = 0; i < p.array.len(); ++i)
-    //    screen.draw_shape(*p.array[i]);
-    //cout << screen;
+    for (const Shape& s: p)
+        cout << s << endl;
 }
 #endif

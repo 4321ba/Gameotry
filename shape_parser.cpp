@@ -1,10 +1,10 @@
 #include "shape_parser.h"
 
-ShapeParser::ShapeParser(std::istream&& is) {
+ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
     unsigned type; // 0: Circle, 3 or above: RegularPolygon
     while (is >> type) {
-        if (type==1 && type==2) {
-            is.clear(std::ios::failbit);
+        if (type==1 || type==2) {
+            is.clear(std::ios::failbit); //TODO eof-ot nem törli? idk
             break;
         }
         Shape* s;
@@ -13,14 +13,14 @@ ShapeParser::ShapeParser(std::istream&& is) {
         else
             s = new Polygon(type);
         is >> *s;
-        //std::cout << *s << std::endl;//temp TODO
-        array.append(s);
-        // TODO valahogy jelezni a hívónak, ha rosszkor jött a fájl vége / a formátum jó volt de a számok száma nem
+        if (is && pred(*s))
+            array.append(s);
+        else
+            delete s;
     }
 }
 
 ShapeParser::~ShapeParser() {
-    for (size_t i = 0; i < array.len(); ++i) {
-        delete array[i];
-    }
+    for (Shape* s: array)
+        delete s;
 }

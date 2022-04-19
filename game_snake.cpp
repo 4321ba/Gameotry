@@ -4,7 +4,7 @@
 
 #include "shapes.hpp"
 
-GameSnake::GameSnake(): shape_parser(std::ifstream("snake_level.txt")), delta_since_last_jump(0), forward(Vector::RIGHT) {
+GameSnake::GameSnake(std::istream& is): shape_parser(is), delta_since_last_jump(0), forward(Vector::RIGHT) {
     Vector pos(Screen::size.x*0.5, Screen::size.y*0.5);
     for (int i = 0; i < SNAKE_LENGTH; ++i)
         snake_pos[i] = pos + Vector::LEFT * i * block_size;
@@ -40,9 +40,9 @@ bool GameSnake::update(double delta, Screen& screen) {
         screen.draw_shape(body);
         died = died || body.intersects_with(head_collision);
     }
-    for (size_t i = 0; i < shape_parser.array.len(); ++i) {
-        screen.draw_shape(*shape_parser.array[i]);
-        died = died || shape_parser.array[i]->intersects_with(head_collision);
+    for (const Shape& s: shape_parser) {
+        screen.draw_shape(s);
+        died = died || s.intersects_with(head_collision);
     }
     //std::cout << head << *shape_parser.array[2];
     return died;

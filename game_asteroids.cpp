@@ -4,39 +4,34 @@
 
 #include "shapes.hpp"
 
-// void GameAsteroids::Actor::stay_on_screen() {
-//     if (pos.x < 0) pos.x += Screen::size.x;
-//     else if (pos.x > Screen::size.x) pos.x -= Screen::size.x;
-//     if (pos.y < 0) pos.y += Screen::size.y;
-//     else if (pos.y > Screen::size.y) pos.y -= Screen::size.y;
-// }
-
 namespace {
     double randd(double range) { return range * rand() / RAND_MAX; }
-    
-    Vector random_edge_pos() {
-        double rnd = randd(1.0); // oldal sorsolása a 4 közül
-        if (rnd < 0.25)
-            return Vector(randd(Screen::size.x), 0);
-        if (rnd < 0.5)
-            return Vector(randd(Screen::size.x), Screen::size.y);
-        if (rnd < 0.75)
-            return Vector(0, randd(Screen::size.y));
-        return Vector(Screen::size.x, randd(Screen::size.y));
-    }
 }
 
 void GameAsteroids::spawn_random_asteroid() {
-    asteroids.append(Actor(random_edge_pos(), Vector::polar(randd(7) + 5, randd(MATH_PI * 2)), 1 + randd(2)));
+    Vector pos;
+    double rnd = randd(1.0); // oldal sorsolása a 4 közül
+    if (rnd < 0.25)
+        pos = Vector(randd(Screen::size.x), 0);
+    else if (rnd < 0.5)
+        pos = Vector(randd(Screen::size.x), Screen::size.y);
+    else if (rnd < 0.75)
+        pos = Vector(0, randd(Screen::size.y));
+    else
+        pos = Vector(Screen::size.x, randd(Screen::size.y));
+    asteroids.append(Actor(pos, Vector::polar(randd(7) + 5, randd(MATH_PI * 2)), 1 + randd(2)));
 }
-
 
 void GameAsteroids::Actor::update(double delta) {
     pos += speed * delta;
-    if (pos.x < 0) pos.x += Screen::size.x;
-    else if (pos.x > Screen::size.x) pos.x -= Screen::size.x;
-    if (pos.y < 0) pos.y += Screen::size.y;
-    else if (pos.y > Screen::size.y) pos.y -= Screen::size.y;
+    if (pos.x < 0)
+        pos.x += Screen::size.x;
+    else if (pos.x > Screen::size.x)
+        pos.x -= Screen::size.x;
+    if (pos.y < 0)
+        pos.y += Screen::size.y;
+    else if (pos.y > Screen::size.y)
+        pos.y -= Screen::size.y;
 }
 
 
@@ -63,7 +58,7 @@ bool GameAsteroids::update(double delta, Screen& screen) {
     player.update(delta);
     Vector nose = player.pos + Vector::polar(player.size, player.rot);
     Polygon player_body(player.pos, nose, 3);
-    Circle player_head(nose, nose + Vector::UP);
+    Circle player_head(nose, nose + Vector::UP);// TODO circle-nek radiuszos ctor?
     screen.draw_shape(player_body);
     screen.draw_shape(player_head);
     

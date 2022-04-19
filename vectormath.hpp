@@ -54,7 +54,6 @@ struct Vector {
         diff.rotate(angle);
         *this = c + diff;
     }
-    friend std::istream& operator>>(std::istream& in, Vector& v); // TODO whyy?
 };
 
 inline std::istream& operator>>(std::istream& in, Vector& v) {
