@@ -7,11 +7,11 @@ using std::endl;
 using std::flush;
 // TODO cerr használata?
 // TODO and or not helyett && || !
-// operator >> helyett operator>>
 // is és os in és out helyett (iostream)
 // TODO console.cpp-ben külön opcióként szétválasztani az utf8 és cpmittoménmi kódolást, hogy windowson is lehessen tesztelni utf8-cal (tesztprogram tesztelhessen utf8 kódokkal)
 // TODO átnevezni .hpp-ről .h -ra a headeröket
 //TODO Console fallback implementáció standard c++-szal / vagy olyan fordítási opció ahol nincs szükség rá (makrómágia)
+//TODO memtrace!
 #include <ctime>
 #include <cstdlib> // for random
 
@@ -40,11 +40,11 @@ int main() {
     con.getsize(width, height);
     Screen screen(width, 2 * (height - 1/*for displaying fps count*/));
 //     GameFlappyBird game;
-    std::ifstream snl("snake_level.txt");
-   GameSnake game(snl);
-    if (!snl.eof())
-        return 1;
-//     GameAsteroids game;
+//    std::ifstream snl("snake_level.txt");
+//   GameSnake game(snl);
+//    if (!snl.eof())
+//        return 1;
+     GameAsteroids game;
     bool success = game.play(con, screen, SECONDS_PER_GAME);
     cout << (success ? "Success!" : "Failure...") << endl;
 }

@@ -16,21 +16,21 @@ struct Vector {
     Vector(double x, double y): x(x), y(y) { }
     static Vector polar(double r, double angle) { return Vector(r * cos(angle), r * sin(angle)); }
 
-    Vector operator + (Vector other) const {//TODO conzisztens szóközök
+    Vector operator+(Vector other) const {//TODO conzisztens szóközök
         return Vector(x + other.x, y + other.y);
     }
-    Vector& operator += (Vector other) {
+    Vector& operator+=(Vector other) {
         x += other.x;
         y += other.y;
         return *this;
     }
-    Vector operator - (Vector other) const {
+    Vector operator-(Vector other) const {
         return Vector(x - other.x, y - other.y);
     }
-    Vector operator * (double other) const { // stretch
+    Vector operator*(double other) const { // stretch
         return Vector(x * other, y * other);
     }
-    double operator * (Vector other) const { // dot product
+    double operator*(Vector other) const { // dot product
         return x * other.x + y * other.y;
     }
     double distance_to(Vector v) const {
@@ -69,9 +69,18 @@ struct Segment {
     Vector a, b; // 2 endpoints
     Segment(Vector a, Vector b): a(a), b(b) {
         if (a.x == b.x && a.y == b.y)
-            throw std::runtime_error("2 endpoints of a segment cannot be the same!");
+            throw std::logic_error("2 endpoints of a segment cannot be the same!");
     }
+    
+    // visszaadja, hogy bal oldalon van-e a pont, amennyiben a pozitív forgásirány
+    // óramutató járásával ellenkező (azaz +y felfelé van)
+    // ha óramutatóval megegyező / +y lefelé van (pl képernyő),
+    // akkor azt mondja meg, hogy jobbra van-e a pont
     bool is_point_to_the_left(Vector p) const;
+    
+    // result is between a and b
+    // visszaadja, hogy a szakasz mely pontja van `p`-hez legközelebb
+    // a visszatérési pont mindig a szakaszon van, azaz mindig `a` és `b` között
     Vector closest_point_to(Vector p) const;
 };
 

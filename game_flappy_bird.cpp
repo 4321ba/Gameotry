@@ -21,11 +21,11 @@ bool GameFlappyBird::update(double delta, Screen& screen) {
     bird_velocity += gravity * delta;
     bird_pos += bird_velocity * delta;
     spike_x += spike_x_speed * delta;
-    if (spike_x < -Screen::size.x * 0.4) {
+    if (spike_x < Screen::size.x * (-0.4)) {
         spike_x = Screen::size.x * 1.4;
         randomize_spike_height();
     }
-    Circle bird(bird_pos, bird_pos + Vector(0, 2.25));
+    Circle bird(bird_pos, 2.25);
     Polygon spike_1(Vector(spike_x,              0), Vector(spike_x, Screen::size.y*0.1 + spike_y_offset /*0.1 .. 0.6*/), 3);
     Polygon spike_2(Vector(spike_x, Screen::size.y), Vector(spike_x, Screen::size.y*0.4 + spike_y_offset /*0.4 .. 0.9*/), 3);
     screen.draw_shape(bird);

@@ -12,9 +12,10 @@ class ShapeParser {
     ShapeParser(const ShapeParser&);
     ShapeParser& operator=(const ShapeParser&);
 public:
+    // pred-del meg lehet mondani, hogy eltároljuk-e az adott alakzatot
     ShapeParser(std::istream& is,
                 bool (*pred)(const Shape&) = [](const Shape&) { return true; }
-               );//TODO (*pred)() ???
+               );
     ~ShapeParser();
     
     // because we want to return Shape& and not Shape*& when dereferencing the iterator

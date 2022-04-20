@@ -37,7 +37,7 @@ bool Game::play(Console& con, Screen& screen, double timeout) {
         ++counted_frames;
         fps_display_delta += delta;
         if (fps_display_delta >= 1.0) {
-            fps_display_delta = 0.0;
+            fps_display_delta -= 1.0;
             displayed_fps = counted_frames;
             counted_frames = 0;
         }

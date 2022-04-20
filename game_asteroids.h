@@ -8,7 +8,7 @@
 
 class GameAsteroids: public Game { // TODO többi class static változóját is konzisztensen
     constexpr static double acceleration = 4; // pixel/s / button pressed
-    constexpr static double seconds_until_asteroid = 3.0;
+    constexpr static double seconds_until_asteroid = 4.0;
     
     // itt az enkapszuláció nagyobb szinten történik: a GameAsteroids szintjén, ezért nem figyel az Actor magára (publikus tagváltozók, kevés tagfüggvény)
     // fölösleges volna felduzzasztani a kódot get_rot(), set_rot(), stb. boilerplate-tel, minél kevesebb kód, annál kevesebb hibalehetőség
@@ -27,6 +27,7 @@ class GameAsteroids: public Game { // TODO többi class static változóját is 
     DynArray<Actor> asteroids;
     double seconds_since_asteroid;
     
+    // mindig a pálya szélén idéz:
     void spawn_random_asteroid();
 public:
     GameAsteroids();

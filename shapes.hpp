@@ -66,20 +66,9 @@ public:
     Polygon(Vector center, Vector vertex, int vc):
         center(center), vertex(vertex), vertex_count(vc > 3 ? vc : 3) { }
     
-    bool has_point(Vector p) const {
-        // for performance reasons:
-        if (center.distance_squared_to(vertex) < center.distance_squared_to(p))
-            return false;
-        return closest_edge_to(p).is_point_to_the_left(p);
-    }
+    bool has_point(Vector p) const;
+    bool intersects_with(const Circle& c) const;
     
-    bool intersects_with(const Circle& c) const {
-        Vector center = c.get_center();
-        if (has_point(center))
-            return true;
-        Segment closest_edge = closest_edge_to(center);
-        return c.has_point(closest_edge.closest_point_to(center));
-    }
     void read_from(std::istream& is) {
         is >> center >> vertex;
     }

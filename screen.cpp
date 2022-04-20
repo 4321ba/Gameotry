@@ -33,24 +33,33 @@ void Screen::draw_vector(const Vector& v) {// TODO remove, nem is jó / tesztelt
     idx(x_coord, y_coord) = true;
 }
 
-void Screen::draw_shape(const Shape& s) {
+void Screen::draw_shape(const Shape& shape) {
     unsigned start_x = 0, start_y = 0, max_width = width, max_height = height;
     // if the simulated ratio is wider than the actual
+    // ha a szimulált képarány szélesebb, mint az igazi
     if (size.x / size.y > (double)width / height) {
         // we need to add black bars at the top and bottom
+        // ekkor a fekete csíkokat alulra és felülre kell tenni
         start_y = (height - width * size.y / size.x) / 2.0;
         max_height -= start_y;
     // if the actual size is wider than the simulated
+    // ha az igazi képméret szélesebb, mint a szimulált
     } else {
         // we need to add black bars at the left and right
+        // ekkor a fekete csíkokat jobbra és balra kell tenni
         start_x = (width - height * size.x / size.y) / 2.0;
         max_width -= start_x;
     }
+    // végigmegyünk azokon az igazi, képernyőn levő képpontokon, ahova tényleg rajzolni szeretnénk
     for (unsigned x = start_x; x < max_width; ++x) {
+        // átfordítjuk a szimulált x koordinátára
         double x_coord = size.x * (0.5 /*for rounding*/ + x - start_x) / (max_width - start_x);
         for (unsigned y = start_y; y < max_height; ++y) {
+            // és a szimulált y koordinátára
             double y_coord = size.y * (0.5 /*for rounding*/ + y - start_y) / (max_height - start_y);
-            if (s.has_point(Vector(x_coord, y_coord)))
+            // ha a szimulált koordináta a megkapott alakzaton belül van,
+            // akkor a valós! koordináta helyére beállítjuk a pixelt
+            if (shape.has_point(Vector(x_coord, y_coord)))
                 idx(x, y) = true;
         }
     }

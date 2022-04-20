@@ -5,7 +5,7 @@
 #include "shapes.hpp"
 
 GameSnake::GameSnake(std::istream& is): shape_parser(is), delta_since_last_jump(0), forward(Vector::RIGHT) {
-    Vector pos(Screen::size.x*0.5, Screen::size.y*0.5);
+    Vector pos = Screen::size * 0.5;
     for (int i = 0; i < SNAKE_LENGTH; ++i)
         snake_pos[i] = pos + Vector::LEFT * i * block_size;
 }
@@ -33,7 +33,7 @@ bool GameSnake::update(double delta, Screen& screen) {
     }
     Polygon head(snake_pos[0], snake_pos[0] + forward * (block_size / 2.0001 * 1.1), 3);
     screen.draw_shape(head);
-    Circle head_collision(snake_pos[0], snake_pos[0] + Vector(block_size / 2.0001, 0));
+    Circle head_collision(snake_pos[0], block_size / 2.0001);
     bool died = false;
     for (int i = 1; i < SNAKE_LENGTH; ++i) {
         Polygon body(snake_pos[i], snake_pos[i] + Vector(block_size / 2.0001, block_size / 2.0001), 4);

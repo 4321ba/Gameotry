@@ -10,16 +10,13 @@ namespace {
 
 void GameAsteroids::spawn_random_asteroid() {
     Vector pos;
-    double rnd = randd(1.0); // oldal sorsolása a 4 közül
-    if (rnd < 0.25)
+    // oldal sorsolása a 4 közül, fent-lent / jobbra-balra között a sebesség tesz majd különbséget
+    if (randd(1.0) < 0.5)
         pos = Vector(randd(Screen::size.x), 0);
-    else if (rnd < 0.5)
-        pos = Vector(randd(Screen::size.x), Screen::size.y);
-    else if (rnd < 0.75)
-        pos = Vector(0, randd(Screen::size.y));
     else
-        pos = Vector(Screen::size.x, randd(Screen::size.y));
-    asteroids.append(Actor(pos, Vector::polar(randd(7) + 5, randd(MATH_PI * 2)), 1 + randd(2)));
+        pos = Vector(0, randd(Screen::size.y));
+    Vector speed = Vector::polar(randd(4) + 3, randd(MATH_PI * 2));
+    asteroids.append(Actor(pos, speed, 1 + randd(2)));
 }
 
 void GameAsteroids::Actor::update(double delta) {
@@ -37,6 +34,9 @@ void GameAsteroids::Actor::update(double delta) {
 
 GameAsteroids::GameAsteroids():
     player(Screen::size * 0.5, Vector(0, 0), 4), seconds_since_asteroid(0) {
+    spawn_random_asteroid();
+    spawn_random_asteroid();
+    spawn_random_asteroid();
     spawn_random_asteroid();
 }
 
@@ -56,9 +56,9 @@ void GameAsteroids::input(int code) {
 
 bool GameAsteroids::update(double delta, Screen& screen) {
     player.update(delta);
-    Vector nose = player.pos + Vector::polar(player.size, player.rot);
-    Polygon player_body(player.pos, nose, 3);
-    Circle player_head(nose, nose + Vector::UP);// TODO circle-nek radiuszos ctor?
+    Vector nose_pos = player.pos + Vector::polar(player.size, player.rot);
+    Polygon player_body(player.pos, nose_pos, 3);
+    Circle player_head(nose_pos, 1);// TODO circle-nek radiuszos ctor? átírás máshol is
     screen.draw_shape(player_body);
     screen.draw_shape(player_head);
     
@@ -70,7 +70,7 @@ bool GameAsteroids::update(double delta, Screen& screen) {
     bool collided = false;
     for (Actor& asteroid: asteroids) {
         asteroid.update(delta);
-        Circle c(asteroid.pos, asteroid.pos + Vector::UP * asteroid.size);
+        Circle c(asteroid.pos, asteroid.size);
         collided = collided || player_body.intersects_with(c) || player_head.intersects_with(c);
         screen.draw_shape(c);
     }

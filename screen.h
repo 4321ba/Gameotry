@@ -25,7 +25,7 @@ public:
     void clear();
 };
 
-inline std::ostream& operator << (std::ostream& out, const Screen& s) {
+inline std::ostream& operator<<(std::ostream& out, const Screen& s) {
     s.render(out);
     return out;
 }

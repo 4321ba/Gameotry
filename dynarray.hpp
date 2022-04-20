@@ -21,17 +21,17 @@ public:
     
     ~DynArray() { delete[] data; }
     
-    T& operator[](size_t idx) {
-        if (idx >= length)
-            throw std::range_error("Index out of bounds for DynArray!");
-        return data[idx];
-    }
-    
-    const T& operator[](size_t idx) const {
-        if (idx >= length)
-            throw std::range_error("Index out of bounds for DynArray!");
-        return data[idx];
-    }
+//     T& operator[](size_t idx) {
+//         if (idx >= length)
+//             throw std::out_of_range("Index out of bounds for DynArray!");
+//         return data[idx];
+//     }
+//     
+//     const T& operator[](size_t idx) const {
+//         if (idx >= length)
+//             throw std::out_of_range("Index out of bounds for DynArray!");
+//         return data[idx];
+//     }
     
     void append(T appendee) {
         if (length >= size) {
@@ -45,7 +45,7 @@ public:
         data[length++] = appendee;
     }
     
-    size_t len() { return length; }
+    //size_t len() { return length; }
     
     
     class Iterator {
@@ -54,7 +54,7 @@ public:
         Iterator(T* p): current(p) { }
         T& operator*() { return *current; }
         bool operator!=(const Iterator& other) { return current != other.current; }
-        Iterator& operator++() { ++current; return *this; }
+        Iterator& operator++() { ++current; return *this; } // TODO ne lehessen túlmenni?
     };
     
     Iterator begin() { return Iterator(data); }
