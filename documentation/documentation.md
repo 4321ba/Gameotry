@@ -2,10 +2,6 @@
 
 Ezt a programot a BME mérnökinformatikus képzés Programozás alapjai 2. tárgyának nagy házi feladataként készítem.
 
-- Név:
-- Neptun kód:
-- Utolsó jelentős módosítás dátuma: 2022. 04. 20.
-
 A program standard C++-ban íródik (C++ 11-nek megfelelően), de opcionálisan használja a tárgy anyagából szerzett (és kibővített) Console osztályt, ami nem standard C++, de jobb parancssori élményt nyújt, és az interfésze jól definiált.
 
 # Specifikáció
