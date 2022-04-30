@@ -16,7 +16,7 @@ struct Vector {
     Vector(double x, double y): x(x), y(y) { }
     static Vector polar(double r, double angle) { return Vector(r * cos(angle), r * sin(angle)); }
 
-    Vector operator+(Vector other) const {//TODO conzisztens szóközök
+    Vector operator+(Vector other) const {
         return Vector(x + other.x, y + other.y);
     }
     Vector& operator+=(Vector other) {
@@ -42,7 +42,7 @@ struct Vector {
         return x_dist * x_dist + y_dist * y_dist;
     }
     double angle_to(Vector v) const {
-        return atan2(y - v.y, x - v.x);
+        return atan2(v.y - y, v.x - x);
     }
     void rotate(double angle) { // radian ofc, (right=0,) clockwise=positive
         double temp = x;
