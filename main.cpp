@@ -78,63 +78,63 @@ int main() {
 
     TEST(Vector, constructor) {
         Vector v(1.4,2.7);
-        EXPECT_DOUBLE_EQ(1.4, v.x) << "Vector ctor x" << endl;
-        EXPECT_DOUBLE_EQ(2.7, v.y) << "Vector ctor y" << endl;
+        EXPECT_DOUBLE_EQ(1.4, v.x);
+        EXPECT_DOUBLE_EQ(2.7, v.y);
         v = Vector(0.0,-99992.3);
-        EXPECT_DOUBLE_EQ(0.0, v.x) << "Vector ctor x" << endl;
-        EXPECT_DOUBLE_EQ(-99992.3, v.y) << "Vector ctor y" << endl;
+        EXPECT_DOUBLE_EQ(0.0, v.x);
+        EXPECT_DOUBLE_EQ(-99992.3, v.y);
         v = Vector::polar(5.0,0.643501108793284); // =36.86°, tg=3/4
-        EXPECT_DOUBLE_EQ(4.0, v.x) << "Vector polar ctor x" << endl;
-        EXPECT_DOUBLE_EQ(3.0, v.y) << "Vector polar ctor y" << endl;
+        EXPECT_DOUBLE_EQ(4.0, v.x);
+        EXPECT_DOUBLE_EQ(3.0, v.y);
     } ENDM
 
     TEST(Vector, constant) {
-        EXPECT_DOUBLE_EQ(0.0, Vector::UP.x) << "UP x" << endl;
-        EXPECT_DOUBLE_EQ(-1.0, Vector::UP.y) << "UP y" << endl;
+        EXPECT_DOUBLE_EQ(0.0, Vector::UP.x);
+        EXPECT_DOUBLE_EQ(-1.0, Vector::UP.y);
     } ENDM
 
     TEST(Vector, operators) {
         Vector v1(1.4,2.7);
         Vector v2(-6.3,14.0);
         Vector add = v1 + v2;
-        EXPECT_DOUBLE_EQ(-4.9, add.x) << "Vector add x" << endl;
-        EXPECT_DOUBLE_EQ(16.7, add.y) << "Vector add y" << endl;
+        EXPECT_DOUBLE_EQ(-4.9, add.x);
+        EXPECT_DOUBLE_EQ(16.7, add.y);
         Vector addeq = v1;
-        EXPECT_DOUBLE_EQ(1.4, addeq.x) << "Vector copyctor x" << endl;
-        EXPECT_DOUBLE_EQ(2.7, addeq.y) << "Vector copyctor y" << endl;
+        EXPECT_DOUBLE_EQ(1.4, addeq.x);
+        EXPECT_DOUBLE_EQ(2.7, addeq.y);
         addeq += v2;
-        EXPECT_DOUBLE_EQ(-4.9, addeq.x) << "Vector addeq x" << endl;
-        EXPECT_DOUBLE_EQ(16.7, addeq.y) << "Vector addeq y" << endl;
+        EXPECT_DOUBLE_EQ(-4.9, addeq.x);
+        EXPECT_DOUBLE_EQ(16.7, addeq.y);
         Vector sub = v1 - v2;
-        EXPECT_DOUBLE_EQ(7.7, sub.x) << "Vector sub x" << endl;
-        EXPECT_DOUBLE_EQ(-11.3, sub.y) << "Vector sub y" << endl;
+        EXPECT_DOUBLE_EQ(7.7, sub.x);
+        EXPECT_DOUBLE_EQ(-11.3, sub.y);
         Vector stretch = v1 * 3.5;
-        EXPECT_DOUBLE_EQ(4.9, stretch.x) << "Vector stretch x" << endl;
-        EXPECT_DOUBLE_EQ(9.45, stretch.y) << "Vector stretch y" << endl;
+        EXPECT_DOUBLE_EQ(4.9, stretch.x);
+        EXPECT_DOUBLE_EQ(9.45, stretch.y);
         double dot = v1 * v2;
-        EXPECT_DOUBLE_EQ(28.98, dot) << "Vector dot product" << endl;
+        EXPECT_DOUBLE_EQ(28.98, dot);
     } ENDM
 
     TEST(Vector, calculations) {
         Vector v1(1.4,2.7);
         Vector v2(-6.3,14.0);
         double dist = v1.distance_to(v2);
-        EXPECT_DOUBLE_EQ(13.674063039199432, dist) << "Vector distance" << endl;
+        EXPECT_DOUBLE_EQ(13.674063039199432, dist);
         double dist_squared = v1.distance_squared_to(v2);
-        EXPECT_DOUBLE_EQ(186.98, dist_squared) << "Vector distance squared" << endl;
+        EXPECT_DOUBLE_EQ(186.98, dist_squared);
         double angle = v2.angle_to(v1);
-        EXPECT_DOUBLE_EQ(-0.972652083130931, angle) << "Vector angle" << endl;
+        EXPECT_DOUBLE_EQ(-0.972652083130931, angle);
         Vector rot = v1;
         rot.rotate(MATH_PI / 2);
-        EXPECT_DOUBLE_EQ(-2.7, rot.x) << "Vector rotate1 x" << endl;
-        EXPECT_DOUBLE_EQ(1.4, rot.y) << "Vector rotate1 y" << endl;
+        EXPECT_DOUBLE_EQ(-2.7, rot.x);
+        EXPECT_DOUBLE_EQ(1.4, rot.y);
         rot.rotate(1.0);
-        EXPECT_DOUBLE_EQ(-2.636875604575032, rot.x) << "Vector rotate2 x" << endl;
-        EXPECT_DOUBLE_EQ(-1.515548430765925, rot.y) << "Vector rotate2 y" << endl;
+        EXPECT_DOUBLE_EQ(-2.636875604575032, rot.x);
+        EXPECT_DOUBLE_EQ(-1.515548430765925, rot.y);
         rot = v1;
         rot.rotate_around(v2, MATH_PI);
-        EXPECT_DOUBLE_EQ(-14.0, rot.x) << "Vector rotate around v2 x" << endl;
-        EXPECT_DOUBLE_EQ(25.3, rot.y) << "Vector rotate around v2 y" << endl;
+        EXPECT_DOUBLE_EQ(-14.0, rot.x);
+        EXPECT_DOUBLE_EQ(25.3, rot.y);
     } ENDM
     
     TEST(Vector, streamoperators) {
