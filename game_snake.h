@@ -1,7 +1,7 @@
 #ifndef GAME_SNAKE_H
 #define GAME_SNAKE_H
 
-#include "vectormath.hpp"
+#include "vectormath.h"
 #include "screen.h"
 #include "shape_parser.h"
 #include "game.h"

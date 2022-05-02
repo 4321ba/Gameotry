@@ -2,7 +2,7 @@
 #define SCREEN_H
 
 #include <iostream>
-#include "shapes.hpp"
+#include "shapes.h"
 
 class Screen {
     const unsigned width, height;
@@ -19,7 +19,6 @@ public:
     static const Vector size;
     Screen(unsigned w/*idth*/, unsigned h/*eight*/); // height will be made divisible by 2
     ~Screen() { delete[] data; }
-    void draw_vector(const Vector& v);
     void draw_shape(const Shape& s);
     void render(std::ostream& out) const;
     void clear();

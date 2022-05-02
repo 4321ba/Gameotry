@@ -17,8 +17,8 @@ using std::flush;
 
 #include <fstream>
 
-#include "vectormath.hpp"
-#include "shapes.hpp"
+#include "vectormath.h"
+#include "shapes.h"
 #include "console.h"
 #include "shape_parser.h"
 
@@ -41,11 +41,11 @@ int main() {
     con.getsize(width, height);
     Screen screen(width, 2 * (height - 1/*for displaying fps count*/));
 //     GameFlappyBird game;
-//    std::ifstream snl("snake_level.txt");
-//   GameSnake game(snl);
-//    if (!snl.eof())
-//        return 1;
-     GameAsteroids game;
+    std::ifstream snl("snake_level.txt");
+   GameSnake game(snl);
+    if (!snl.eof())
+        return 1;
+//     GameAsteroids game;
     bool success = game.play(con, screen, SECONDS_PER_GAME);
     cout << (success ? "Success!" : "Failure...") << endl;
 }
@@ -73,6 +73,7 @@ int main() {
 //#include "memtrace.h"
 #include "gtest_lite.h"
 #include <sstream>
+#include <algorithm>
 
 int main() {
 
@@ -167,6 +168,234 @@ int main() {
         ss << s;
         EXPECT_STREQ("Segment(Vector(1.4, 2.7), Vector(-6.3, 14))", ss.str().c_str());
     } ENDM
+    
+    TEST(Circle, calculations) {
+        Circle c(Vector(23, 45), Vector(25, 45));
+        EXPECT_DOUBLE_EQ(23.0, c.get_center().x);
+        EXPECT_TRUE(c.has_point(Vector(23, 45)));
+        EXPECT_TRUE(c.has_point(Vector(24, 45)));
+        EXPECT_TRUE(c.has_point(Vector(24, 46)));
+        EXPECT_FALSE(c.has_point(Vector(25, 46)));
+        EXPECT_FALSE(c.has_point(Vector(0, 0)));
+        Circle c2(Vector(25, 46), 1);
+        EXPECT_TRUE(c.intersects_with(c2));
+        Circle c3(Vector(26, 46), 1);
+        EXPECT_FALSE(c.intersects_with(c3));
+        Circle c4(Vector(200, -100), 500);
+        EXPECT_TRUE(c.intersects_with(c4));
+        std::stringstream ss1;
+        ss1 << c;
+        EXPECT_STREQ("Circle(center = Vector(23, 45), radius = 2)", ss1.str().c_str());
+        std::stringstream ss2("69.4 -42.8 23423.23 45564.54");
+        ss2 >> c;
+        EXPECT_DOUBLE_EQ(69.4, c.get_center().x);
+        EXPECT_DOUBLE_EQ(-42.8, c.get_center().y);
+        std::stringstream ss3;
+        ss3 << c;
+        EXPECT_STREQ("Circle(center = Vector(69.4, -42.8), radius = 51239)", ss3.str().c_str());
+    } ENDM
+    
+    TEST(Polygon, triangle) {
+        Polygon p(Vector(23, 45), Vector(25, 45), 3);
+        EXPECT_TRUE(p.has_point(Vector(23, 45)));
+        EXPECT_TRUE(p.has_point(Vector(24, 45)));
+        EXPECT_FALSE(p.has_point(Vector(24, 46)));
+        EXPECT_FALSE(p.has_point(Vector(25, 46)));
+        EXPECT_FALSE(p.has_point(Vector(0, 0)));
+        Circle c2(Vector(25, 46), 1);
+        EXPECT_TRUE(p.intersects_with(c2));
+        Circle c3(Vector(26, 46), 1);
+        EXPECT_FALSE(p.intersects_with(c3));
+        Circle c4(Vector(200, -100), 500);
+        EXPECT_TRUE(p.intersects_with(c4));
+        Circle c5(Vector(30, 45.1), 5);
+        EXPECT_FALSE(p.intersects_with(c5));
+        Circle c6(Vector(23, 45.1), 0.01);
+        EXPECT_TRUE(p.intersects_with(c6));
+        std::stringstream ss1;
+        ss1 << p;
+        EXPECT_STREQ("3-gon(center = Vector(23, 45), vertex = Vector(25, 45))", ss1.str().c_str());
+        std::stringstream ss2("69.4 -42.8 23423.23 45564.54");
+        ss2 >> p;
+        std::stringstream ss3;
+        ss3 << p;
+        EXPECT_STREQ("3-gon(center = Vector(69.4, -42.8), vertex = Vector(23423.2, 45564.5))", ss3.str().c_str());
+    } ENDM
+    
+    TEST(Polygon, square) {
+        Polygon p(Vector(23, 45), Vector(25, 45), 4);
+        EXPECT_TRUE(p.has_point(Vector(23, 45)));
+        EXPECT_TRUE(p.has_point(Vector(24, 45)));
+        EXPECT_TRUE(p.has_point(Vector(23.9, 46)));
+        EXPECT_FALSE(p.has_point(Vector(24.1, 46)));
+        EXPECT_FALSE(p.has_point(Vector(25, 46)));
+        EXPECT_FALSE(p.has_point(Vector(0, 0)));
+        Circle c2(Vector(25, 46), 1);
+        EXPECT_TRUE(p.intersects_with(c2));
+        Circle c3(Vector(26, 46), 1);
+        EXPECT_FALSE(p.intersects_with(c3));
+        Circle c4(Vector(200, -100), 500);
+        EXPECT_TRUE(p.intersects_with(c4));
+        Circle c5(Vector(30, 45.1), 5);
+        EXPECT_FALSE(p.intersects_with(c5));
+        Circle c6(Vector(23, 45.1), 0.01);
+        EXPECT_TRUE(p.intersects_with(c6));
+        std::stringstream ss1;
+        ss1 << p;
+        EXPECT_STREQ("4-gon(center = Vector(23, 45), vertex = Vector(25, 45))", ss1.str().c_str());
+        std::stringstream ss2("69.4 -42.8 23423.23 45564.54");
+        ss2 >> p;
+        std::stringstream ss3;
+        ss3 << p;
+        EXPECT_STREQ("4-gon(center = Vector(69.4, -42.8), vertex = Vector(23423.2, 45564.5))", ss3.str().c_str());
+    } ENDM
+    
+    
+    TEST(DynArray, integer) {
+        DynArray<int> arr;
+        arr.append(1);
+        arr.append(2);
+        DynArray<int>::Iterator it = arr.begin();
+        EXPECT_EQ(1, *it);
+        EXPECT_NO_THROW(++it);
+        EXPECT_EQ(2, *it);
+        EXPECT_NO_THROW(++it);
+        EXPECT_FALSE(it != arr.end());
+        EXPECT_TRUE(it != arr.begin());
+        EXPECT_THROW(*it, std::out_of_range&);
+        arr.append(3);
+        arr.append(4);
+        arr.append(5);
+        int test1[] = { 1, 2, 3, 4, 5 };
+        EXPECT_TRUE(std::equal(test1, test1 + 5, arr.begin()));
+        arr.append(165);
+        arr.append(166);
+        arr.append(167);
+        arr.append(168);
+        arr.append(169);
+        int test2[] = { 1, 2, 3, 4, 5, 165, 166, 167, 168, 164 };
+        EXPECT_FALSE(std::equal(test2, test2 + 10, arr.begin()));
+        int test3[] = { 1, 2, 3, 4, 5, 165, 166, 167, 168, 169 };
+        EXPECT_TRUE(std::equal(test3, test3 + 10, arr.begin()));
+    } ENDM
+    
+    TEST(DynArray, vector) {
+        DynArray<Vector> arr;
+        arr.append(Vector(1.56, 345.6));
+        arr.append(Vector(1.4556, 34345.6));
+        DynArray<Vector>::Iterator it = arr.begin();
+        EXPECT_DOUBLE_EQ(1.56, (*it).x); // nyilacska operátor nincs felülírva :/ a tervnek megfelelően
+        EXPECT_NO_THROW(++it);
+        EXPECT_DOUBLE_EQ(1.4556, (*it).x);
+        EXPECT_NO_THROW(++it);
+        EXPECT_FALSE(it != arr.end());
+        EXPECT_TRUE(it != arr.begin());
+        EXPECT_THROW(*it, std::out_of_range&);
+        arr.append(Vector(2341.56, 34234235.6));
+        arr.append(Vector(234231.56, 342342345.6));
+        arr.append(Vector(134.56, 334324545.6));
+        Vector test1[] = {
+            Vector(1.56, 345.6),
+            Vector(1.4556, 34345.6),
+            Vector(2341.56, 34234235.6),
+            Vector(234231.56, 342342345.6),
+            Vector(134.56, 334324545.6),
+        };
+        EXPECT_TRUE(std::equal(test1, test1 + 5, arr.begin(),
+                               [](Vector a, Vector b){ return a.x==b.x && a.y==b.y; }
+                              ));
+    } ENDM
+    
+    
+    TEST(ShapeParser, parsing) {
+        std::stringstream ss1("123 234 3242 343 fhdgh");
+        ShapeParser sp1(ss1);
+        EXPECT_FALSE(ss1.eof());
+        EXPECT_THROW(*sp1.begin(), std::out_of_range&); // egy adat se szabad legyen bent
+        
+        std::stringstream ss2("123 234 3242 343 3476 3634 6834 56");
+        ShapeParser sp2(ss2);
+        EXPECT_TRUE(ss2.eof());
+        EXPECT_NO_THROW(*sp2.begin());
+        EXPECT_THROW(*++sp2.begin(), std::out_of_range&); // 1 shape kell legyen bent
+        std::stringstream checkss;
+        checkss << *sp2.begin();
+        EXPECT_STREQ("123-gon(center = Vector(234, 3242), vertex = Vector(343, 3476))", checkss.str().c_str());
+        
+        std::ifstream fs("snake_level.txt");
+        ShapeParser sp3(fs);
+        EXPECT_TRUE(fs.eof());
+        const char* expected[] = {
+            "4-gon(center = Vector(40, -39.5), vertex = Vector(0, 0.5))",
+            "4-gon(center = Vector(40, 89.5), vertex = Vector(0, 49.5))",
+            "4-gon(center = Vector(-24.5, 25), vertex = Vector(0.5, 0))",
+            "4-gon(center = Vector(104.5, 25), vertex = Vector(79.5, 0))",
+            "Circle(center = Vector(15.1, 20.85), radius = 2.05)",
+            "3-gon(center = Vector(41, 10.5), vertex = Vector(46, 10.5))",
+            "6-gon(center = Vector(65, 37), vertex = Vector(60.7, 32.7))",
+        };
+        int idx = 0;
+        for (const Shape& s: sp3) { // iterátor tesztelése
+            std::stringstream ss;
+            ss << s;
+            EXPECT_STREQ(expected[idx++], ss.str().c_str());
+        }
+        EXPECT_EQ(7, idx);
+    } ENDM
+    
+    TEST(Screen, drawing) {
+        std::ifstream fs("snake_level.txt");
+        ShapeParser sp3(fs);
+        EXPECT_TRUE(fs.eof());
+        Screen screen(100, 80);
+        for (const Shape& s: sp3)
+            screen.draw_shape(s);
+        std::stringstream ss;
+        ss << screen;
+        const char* expected =
+        "                                                                                                    \n"
+        "                                                                                                    \n"
+        "                                                                                                    \n"
+        "                                                                                                    \n"
+        "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                               █▄▄                                                █\n"
+        "█                                               █████▄                                             █\n"
+        "█                                               ████████▄                                          █\n"
+        "█                                               ██████▀▀                                           █\n"
+        "█                                               ███▀                                               █\n"
+        "█                                               ▀                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                ███▄                                                                              █\n"
+        "█               █████                                                                              █\n"
+        "█                ▀▀▀▀                                                                              █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                            ▄▄▄▄███▄              █\n"
+        "█                                                                          ▄██████████▄            █\n"
+        "█                                                                          █████████████▄          █\n"
+        "█                                                                         ▄█████████████           █\n"
+        "█                                                                         ██████████████           █\n"
+        "█                                                                          ▀███████████            █\n"
+        "█                                                                            ▀██████▀▀▀            █\n"
+        "█                                                                              ▀▀                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█                                                                                                  █\n"
+        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
+        "                                                                                                    \n"
+        "                                                                                                    \n"
+        "                                                                                                    \n"
+        "                                                                                                    \n";
+        EXPECT_STREQ(expected, ss.str().c_str());
+    } ENDM
+    // TODO főprogram és tesztelése
     
 }
 

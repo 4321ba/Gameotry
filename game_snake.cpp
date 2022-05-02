@@ -1,8 +1,6 @@
 #include "game_snake.h"
 
-#include <fstream>
-
-#include "shapes.hpp"
+#include "shapes.h"
 
 GameSnake::GameSnake(std::istream& is): shape_parser(is), delta_since_last_jump(0), forward(Vector::RIGHT) {
     Vector pos = Screen::size * 0.5;

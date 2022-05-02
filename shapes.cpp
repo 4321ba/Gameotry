@@ -1,4 +1,4 @@
-#include "shapes.hpp"
+#include "shapes.h"
 
 // returns in positive direction: seg.b is "more" in the positive dir (rotation-wise) then a
 // visszaadja, hogy a sokszög melyik oldala van az adott ponthoz legközelebb

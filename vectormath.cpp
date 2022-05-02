@@ -1,4 +1,4 @@
-#include "vectormath.hpp"
+#include "vectormath.h"
 
 const Vector Vector::UP   ( 0, -1);
 const Vector Vector::DOWN ( 0,  1);

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdlib> // for random
 
-#include "shapes.hpp"
+#include "shapes.h"
 
 GameFlappyBird::GameFlappyBird(): spike_x(-42), bird_pos(Screen::size.x*0.125, Screen::size.y*0.3), bird_velocity(0, 0) {
     randomize_spike_height();

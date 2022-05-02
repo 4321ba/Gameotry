@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-#include "shapes.hpp"
+#include "shapes.h"
 
 namespace {
     double randd(double range) { return range * rand() / RAND_MAX; }

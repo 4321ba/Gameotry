@@ -2,7 +2,7 @@
 #define SHAPES_H
 
 #include <iostream>
-#include "vectormath.hpp"
+#include "vectormath.h"
 
 class Circle;
 // TODO operator== a tesztekhez
@@ -35,7 +35,7 @@ public:
     Circle(Vector center, Vector arc_point):
         center(center), radius(center.distance_to(arc_point)) { }
     Circle(Vector center, double radius):
-        center(center), radius(radius) { } // TODO ezt használni gyakrabban
+        center(center), radius(fabs(radius)) { } // TODO ezt használni gyakrabban
     
     Vector get_center() const { return center; }
     

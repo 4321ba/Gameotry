@@ -27,12 +27,6 @@ Screen::Screen(unsigned w, unsigned h): width(w), height(h - h % 2) {
     clear();
 }
 
-void Screen::draw_vector(const Vector& v) {// TODO remove, nem is jó / tesztelt
-    unsigned x_coord = v.x / size.x * width;
-    unsigned y_coord = v.y / size.y * height;
-    idx(x_coord, y_coord) = true;
-}
-
 void Screen::draw_shape(const Shape& shape) {
     unsigned start_x = 0, start_y = 0, max_width = width, max_height = height;
     // if the simulated ratio is wider than the actual

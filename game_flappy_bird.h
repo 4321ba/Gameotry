@@ -1,7 +1,7 @@
 #ifndef GAME_FLAPPY_BIRD_H
 #define GAME_FLAPPY_BIRD_H
 
-#include "vectormath.hpp"
+#include "vectormath.h"
 #include "screen.h"
 #include "game.h"
 

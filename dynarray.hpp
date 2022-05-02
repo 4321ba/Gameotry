@@ -21,18 +21,6 @@ public:
     
     ~DynArray() { delete[] data; }
     
-//     T& operator[](size_t idx) {
-//         if (idx >= length)
-//             throw std::out_of_range("Index out of bounds for DynArray!");
-//         return data[idx];
-//     }
-//     
-//     const T& operator[](size_t idx) const {
-//         if (idx >= length)
-//             throw std::out_of_range("Index out of bounds for DynArray!");
-//         return data[idx];
-//     }
-    
     void append(T appendee) {
         if (length >= size) {
             T* old_data = data;
@@ -45,20 +33,31 @@ public:
         data[length++] = appendee;
     }
     
-    //size_t len() { return length; }
-    
-    
     class Iterator {
         T* current;
+        T* end;
     public:
-        Iterator(T* p): current(p) { }
-        T& operator*() { return *current; }
+        
+        // azért, hogy std::algoritmusokkal lehessen használni (pl std::equal)
+        // https://stackoverflow.com/questions/59851539/no-type-named-value-type-in-struct-stditerator-traits
+        using difference_type = std::ptrdiff_t;
+        using value_type = T;
+        using pointer = T*;
+        using reference = T&;
+        using iterator_category = std::output_iterator_tag;
+
+        Iterator(T* current, T* end): current(current), end(end) { }
+        T& operator*() {
+            if (current >= end)
+                throw std::out_of_range("Iterator dereferencing is out of bounds!");
+            return *current;
+        }
         bool operator!=(const Iterator& other) { return current != other.current; }
-        Iterator& operator++() { ++current; return *this; } // TODO ne lehessen túlmenni?
+        Iterator& operator++() { ++current; return *this; }
     };
     
-    Iterator begin() { return Iterator(data); }
-    Iterator end() { return Iterator(data + length); }
+    Iterator begin() { return Iterator(data, data + length); }
+    Iterator end() { return Iterator(data + length, data + length); }
 };
 
 #endif // DYNARRAY_H

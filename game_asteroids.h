@@ -1,7 +1,7 @@
 #ifndef GAME_ASTEROIDS_H
 #define GAME_ASTEROIDS_H
 
-#include "vectormath.hpp" // TODO .hpp helyett .h
+#include "vectormath.h"
 #include "screen.h"
 #include "dynarray.hpp"
 #include "game.h"
