@@ -6,13 +6,13 @@ const Vector Screen::size = Vector(80.0, 50.0);
 
 bool& Screen::idx(unsigned x, unsigned y) {
     if (x >= width || y >= height)
-        throw std::range_error("Screen coordinate out of range");
+        throw std::out_of_range("Screen coordinate out of range");
     return data[y * width + x];
 }
 
 bool Screen::idx(unsigned x, unsigned y) const {
     if (x >= width || y >= height)
-        throw std::range_error("Screen coordinate out of range");
+        throw std::out_of_range("Screen coordinate out of range");
     return data[y * width + x];
 }
 

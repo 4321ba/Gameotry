@@ -114,6 +114,8 @@ A bemeneti fájlformátumban mégsem lesz hibajelzés váratlanul véget érő f
 
 Az egységkörön belül levésre való szűrés mégis megtörténhet beolvasás alatt, eltárolás előtt, predikátummal.
 
+Használt teszt keretrendszerek (memtrace és gtest_lite): [innen](https://git.ik.bme.hu/Prog2/ell_feladat/Test).
+
 # Terv
 
 ## Osztálydiagramok
@@ -304,3 +306,16 @@ void Screen::draw_shape(const Shape& shape) {
     }
 }
 ```
+
+# Kész program
+
+## Fordítási opciók
+
+A fordítás során az alábbi makrók definiálása a következőket jelenti:
+
+- MEMTRACE: bekapcsolja a memóriaszivárgás-ellenőrzőt
+- CPORTA: bekapcsolja a tesztek fordítását (nem MAIN_TEST, mert ez lesz a portálon definiálva)
+- MAIN_ASSIGNMENT: bekapcsolja a feladat által kért főprogram fordítását
+- MAIN_GAME: bekapcsolja a játék főprogram, illetve a játékért felelős többletkód fordítását
+
+Az utóbbi 3 logikailag egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben lefutni.
