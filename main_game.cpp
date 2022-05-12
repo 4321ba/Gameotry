@@ -20,7 +20,8 @@ void main_game() {
     Console& con = Console::con();
     con.clrscr();
     
-    int width = 80, height = 25;
+    int width = 80;
+    int height = 25;
     con.getsize(width, height);
     Screen screen(width, 2 * (height - 1/*for displaying fps count*/));
     

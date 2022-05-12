@@ -30,7 +30,10 @@ Screen::Screen(unsigned width, unsigned height): width(width), height(height - h
 }
 
 void Screen::draw_shape(const Shape& shape) {
-    unsigned start_x = 0, start_y = 0, max_width = width, max_height = height;
+    unsigned start_x = 0;
+    unsigned start_y = 0;
+    unsigned max_width = width;
+    unsigned max_height = height;
     // if the simulated ratio is wider than the actual
     // ha a szimulált képarány szélesebb, mint az igazi
     if (size.x / size.y > (double)width / height) {

@@ -1,13 +1,11 @@
 #include "memtrace.h"
 
 //TODO helyesírás ellenőrzés
-//TODO makrómágia MAIN_GAME makróval feltételes fordítása a játékoknak + consolenak
-//TODO külön cpp és h minden osztályhoz!
+//TODO makrómágia MAIN_GAME makróval feltételes fordítása a játékoknak + main_gamenek + consolenak
 //TODO doksi képek + szöveg update
+//TODO igazi dokumentáció
 //TODO átnézni a pontozást
-//TODO clang checkvmi
 //TODO név + nkód
-//TODO -fsanitize=address
 
 #include <iostream>
 
@@ -19,7 +17,7 @@
 
 int main() {
     try {
-#ifdef CPORTA // TODO n
+#ifdef CPORTA
         main_test();
 #endif // CPORTA
 #ifdef MAIN_ASSIGNMENT

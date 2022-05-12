@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef SHAPE_PARSER_H
+#define SHAPE_PARSER_H
 #include "memtrace.h"
 
 #include <iostream>
@@ -32,4 +32,4 @@ public:
     Iterator end() { return array.end(); }
 };
 
-#endif // PARSER_H
+#endif // SHAPE_PARSER_H
