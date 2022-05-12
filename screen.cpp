@@ -1,7 +1,6 @@
 #include "memtrace.h"
 
 #include "screen.h"
-#include "console.h"
 
 // modifying this may break some parts of the games that expect this virtual ratio/resolution
 const Vector Screen::size = Vector(80.0, 50.0);

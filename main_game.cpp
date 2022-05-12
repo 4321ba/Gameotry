@@ -1,6 +1,5 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
-
-//#ifdef MAIN_GAME
 
 #include <iostream>
 #include <fstream>
@@ -48,4 +47,4 @@ void main_game() {
     std::cout << "You died during your " << games_played << ". game. Congratulations!" << std::endl;
 }
 
-//#endif // MAIN_GAME
+#endif // MAIN_GAME

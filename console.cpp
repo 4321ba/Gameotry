@@ -1,3 +1,4 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
 
 /**
@@ -216,3 +217,5 @@ void Console::hMeter(double value, double max, int width, const char *txt, int y
     std::cout << "]\r";
     std::cout.flush();
 }
+
+#endif // MAIN_GAME

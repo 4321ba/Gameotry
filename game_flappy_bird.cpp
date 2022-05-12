@@ -1,3 +1,4 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
 
 #include "game_flappy_bird.h"
@@ -40,3 +41,5 @@ bool GameFlappyBird::update(double delta, Screen& screen) {
         || upper_wall.intersects_with(bird)
         || lower_wall.intersects_with(bird);
 }
+
+#endif // MAIN_GAME

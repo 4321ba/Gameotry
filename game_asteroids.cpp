@@ -1,3 +1,4 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
 
 #include "game_asteroids.h"
@@ -78,3 +79,5 @@ bool GameAsteroids::update(double delta, Screen& screen) {
     }
     return collided;
 }
+
+#endif // MAIN_GAME

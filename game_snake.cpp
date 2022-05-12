@@ -1,3 +1,4 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
 
 #include "game_snake.h"
@@ -46,3 +47,5 @@ bool GameSnake::update(double delta, Screen& screen) {
     }
     return died;
 }
+
+#endif // MAIN_GAME

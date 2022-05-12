@@ -1,3 +1,4 @@
+#ifdef MAIN_GAME
 #include "memtrace.h"
 
 #include <iostream>
@@ -52,3 +53,5 @@ bool Game::play(Console& con, Screen& screen, double timeout) {
     con.gotoxy(1, 1);
     return !quit;
 }
+
+#endif // MAIN_GAME
