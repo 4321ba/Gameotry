@@ -1,7 +1,9 @@
+#include "memtrace.h"
+
 #include "screen.h"
 #include "console.h"
 
-// modifying this will break the games, that have hardcoded values TODO? nem kell instance-t adni használathoz! statikus adattag!
+// modifying this may break some parts of the games that expect this virtual ratio/resolution
 const Vector Screen::size = Vector(80.0, 50.0);
 
 bool& Screen::idx(unsigned x, unsigned y) {
@@ -22,8 +24,8 @@ void Screen::clear() {
             idx(x, y) = false;
 }
 
-Screen::Screen(unsigned w, unsigned h): width(w), height(h - h % 2) {
-    data = new bool[width * height];
+Screen::Screen(unsigned width, unsigned height): width(width), height(height - height % 2) {
+    data = new bool[this->width * this->height];
     clear();
 }
 
@@ -59,12 +61,25 @@ void Screen::draw_shape(const Shape& shape) {
     }
 }
 
+namespace {
+    enum Block { BLOCK_EMPTY, BLOCK_DOWN, BLOCK_UP, BLOCK_FULL };
+    /// ad egy dobozt: " ", "▄", "▀" vagy "█"
+    const char* getblock(Block b) {
+#ifdef CMDEXE_ENCODING
+        const char *boxes[] = {" ", "\xDC", "\xDF", "\xDB"}; // IBM-852 kódolással (cmd.exe)
+#else
+        const char *boxes[] = {" ", "▄", "▀", "█"}; // UTF-8 kódolással (bármi modern, teszt ezt használja)
+#endif
+        return boxes[b];
+    }
+}
+
 void Screen::render(std::ostream& out) const {
     for (unsigned y = 0; y < height / 2; ++y) {
         for (unsigned x = 0; x < width; ++x) {
             bool up = idx(x, 2 * y);
             bool down = idx(x, 2 * y + 1);
-            out << Console::getblock((Console::Block)(2 * up + down));
+            out << getblock((Block)(2 * up + down));
         }
         out << '\n';
     }

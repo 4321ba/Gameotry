@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include "vectormath.h"
 
 const Vector Vector::UP   ( 0, -1);

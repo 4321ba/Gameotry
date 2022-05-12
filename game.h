@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include "memtrace.h"
 
 #include "screen.h"
 #include "console.h"

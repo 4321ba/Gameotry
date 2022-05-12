@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include "shapes.h"
 
 // returns in positive direction: seg.b is "more" in the positive dir (rotation-wise) then a

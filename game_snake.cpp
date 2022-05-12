@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include "game_snake.h"
 
 #include "shapes.h"
@@ -9,11 +11,11 @@ GameSnake::GameSnake(std::istream& is): shape_parser(is), delta_since_last_jump(
 }
 
 void GameSnake::input(int code) {
-    switch (code) { // TODO wasd
-        case Console::KEY_LEFT : forward = Vector::LEFT ; break;
-        case Console::KEY_RIGHT: forward = Vector::RIGHT; break;
-        case Console::KEY_UP   : forward = Vector::UP   ; break;
-        case Console::KEY_DOWN : forward = Vector::DOWN ; break;
+    switch (code) {
+        case Console::KEY_LEFT : case 'a': forward = Vector::LEFT ; break;
+        case Console::KEY_RIGHT: case 'd': forward = Vector::RIGHT; break;
+        case Console::KEY_UP   : case 'w': forward = Vector::UP   ; break;
+        case Console::KEY_DOWN : case 's': forward = Vector::DOWN ; break;
     }
 }
 
@@ -42,6 +44,5 @@ bool GameSnake::update(double delta, Screen& screen) {
         screen.draw_shape(s);
         died = died || s.intersects_with(head_collision);
     }
-    //std::cout << head << *shape_parser.array[2];
     return died;
 }

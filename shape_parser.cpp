@@ -1,10 +1,12 @@
+#include "memtrace.h"
+
 #include "shape_parser.h"
 
 ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
     unsigned type; // 0: Circle, 3 or above: RegularPolygon
     while (is >> type) {
         if (type==1 || type==2) {
-            is.clear(std::ios::failbit); //TODO eof-ot nem törli? idk
+            is.clear(std::ios::failbit);
             break;
         }
         Shape* s;

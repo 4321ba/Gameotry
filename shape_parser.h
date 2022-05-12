@@ -1,5 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
+#include "memtrace.h"
 
 #include <iostream>
 #include "dynarray.hpp"

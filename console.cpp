@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 /**
  * \file: console.cpp
  * Console input/output kezelése
@@ -175,6 +177,7 @@ void Console::getsize(int& x, int& y) { ::getsize(x, y); }
 /// @param y - függőleges pozíció (1..24?)
 void Console::gotoxy(int x, int y) { ::gotoxy(x, y); }
 
+
 /// Valós érték nagyságának megjelenítése egy vízszintes vonallal
 /// @param value - érték
 /// @param max - érték maximuma
@@ -212,14 +215,4 @@ void Console::hMeter(double value, double max, int width, const char *txt, int y
     }
     std::cout << "]\r";
     std::cout.flush();
-}
-
-/// ad egy dobozt: " ", "▄", "▀" vagy "█"
-const char* Console::getblock(Block b) {
-#if defined(_WINX)
-    const char *boxes[] = {" ", "\xDC", "\xDF", "\xDB"}; // IBM-852 kódolással (cmd.exe)
-#elif defined(_UNIX)
-    const char *boxes[] = {" ", "▄", "▀", "█"}; // UTF-8 kódolással (bármi modern)
-#endif
-    return boxes[b];
 }

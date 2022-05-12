@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include "game_flappy_bird.h"
 
 #include <iostream>
@@ -34,7 +36,7 @@ bool GameFlappyBird::update(double delta, Screen& screen) {
     screen.draw_shape(upper_wall);
     screen.draw_shape(lower_wall);
     return spike_1.intersects_with(bird)
-        or spike_2.intersects_with(bird)
-        or upper_wall.intersects_with(bird)
-        or lower_wall.intersects_with(bird);
+        || spike_2.intersects_with(bird)
+        || upper_wall.intersects_with(bird)
+        || lower_wall.intersects_with(bird);
 }

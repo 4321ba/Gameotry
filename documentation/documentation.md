@@ -314,8 +314,9 @@ void Screen::draw_shape(const Shape& shape) {
 A fordítás során az alábbi makrók definiálása a következőket jelenti:
 
 - MEMTRACE: bekapcsolja a memóriaszivárgás-ellenőrzőt
+- CMDEXE_ENCODING: UTF8 helyett IBM-852 kódolással rajzolja ki a dobozokat, hogy Windowsos parancssoron működjön (a teszt így nem fog jól lefutni!)
 - CPORTA: bekapcsolja a tesztek fordítását (nem MAIN_TEST, mert ez lesz a portálon definiálva)
 - MAIN_ASSIGNMENT: bekapcsolja a feladat által kért főprogram fordítását
 - MAIN_GAME: bekapcsolja a játék főprogram, illetve a játékért felelős többletkód fordítását
 
-Az utóbbi 3 logikailag egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben lefutni.
+Az utóbbi 3 felhasználói szempontból egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben mind lefutni.

@@ -1,5 +1,6 @@
 #ifndef SCREEN_H
 #define SCREEN_H
+#include "memtrace.h"
 
 #include <iostream>
 #include "shapes.h"
@@ -17,7 +18,7 @@ class Screen {
 public:
     // this is what it looks like from the outside (so that it's resolution independent)
     static const Vector size;
-    Screen(unsigned w/*idth*/, unsigned h/*eight*/); // height will be made divisible by 2
+    Screen(unsigned width, unsigned height); ///< height will be made divisible by 2
     ~Screen() { delete[] data; }
     void draw_shape(const Shape& s);
     void render(std::ostream& out) const;

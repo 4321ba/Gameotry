@@ -1,14 +1,15 @@
+#include "memtrace.h"
+
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-
-#include "memtrace.h" // TODO többi helyre
 
 #include "vectormath.h"
 #include "shapes.h"
 #include "dynarray.hpp"
 #include "shape_parser.h"
 #include "screen.h"
+#include "mains.h"
 
 #include "gtest_lite.h"
 
@@ -278,6 +279,14 @@ void main_test() {
             EXPECT_STREQ(expected[idx++], ss.str().c_str());
         }
         EXPECT_EQ(7, idx);
+        
+        // 2 mint típus, az érvénytelen
+        std::stringstream ss4("123 234 3242 343 3476 2 6834 56 23 434 52 4234");
+        ShapeParser sp4(ss4);
+        EXPECT_FALSE(ss4.eof());
+        EXPECT_FALSE((bool)ss4);
+        EXPECT_NO_THROW(*sp2.begin());
+        EXPECT_THROW(*++sp2.begin(), std::out_of_range&); // 1 shape kell legyen bent
     } ENDM
     
     TEST(Screen, drawing) {
@@ -290,48 +299,74 @@ void main_test() {
         std::stringstream ss;
         ss << screen;
         const char* expected =
-        "                                                                                                    \n"
-        "                                                                                                    \n"
-        "                                                                                                    \n"
-        "                                                                                                    \n"
-        "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                               █▄▄                                                █\n"
-        "█                                               █████▄                                             █\n"
-        "█                                               ████████▄                                          █\n"
-        "█                                               ██████▀▀                                           █\n"
-        "█                                               ███▀                                               █\n"
-        "█                                               ▀                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                ███▄                                                                              █\n"
-        "█               █████                                                                              █\n"
-        "█                ▀▀▀▀                                                                              █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                            ▄▄▄▄███▄              █\n"
-        "█                                                                          ▄██████████▄            █\n"
-        "█                                                                          █████████████▄          █\n"
-        "█                                                                         ▄█████████████           █\n"
-        "█                                                                         ██████████████           █\n"
-        "█                                                                          ▀███████████            █\n"
-        "█                                                                            ▀██████▀▀▀            █\n"
-        "█                                                                              ▀▀                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█                                                                                                  █\n"
-        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
-        "                                                                                                    \n"
-        "                                                                                                    \n"
-        "                                                                                                    \n"
-        "                                                                                                    \n";
+            "                                                                                                    \n"
+            "                                                                                                    \n"
+            "                                                                                                    \n"
+            "                                                                                                    \n"
+            "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                               █▄▄                                                █\n"
+            "█                                               █████▄                                             █\n"
+            "█                                               ████████▄                                          █\n"
+            "█                                               ██████▀▀                                           █\n"
+            "█                                               ███▀                                               █\n"
+            "█                                               ▀                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                ███▄                                                                              █\n"
+            "█               █████                                                                              █\n"
+            "█                ▀▀▀▀                                                                              █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                            ▄▄▄▄███▄              █\n"
+            "█                                                                          ▄██████████▄            █\n"
+            "█                                                                          █████████████▄          █\n"
+            "█                                                                         ▄█████████████           █\n"
+            "█                                                                         ██████████████           █\n"
+            "█                                                                          ▀███████████            █\n"
+            "█                                                                            ▀██████▀▀▀            █\n"
+            "█                                                                              ▀▀                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█                                                                                                  █\n"
+            "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
+            "                                                                                                    \n"
+            "                                                                                                    \n"
+            "                                                                                                    \n"
+            "                                                                                                    \n";
         EXPECT_STREQ(expected, ss.str().c_str());
     } ENDM
-    // TODO főprogram és tesztelése
     
+    TEST(main_assignment, invalid) {
+        std::stringstream in("0 0    79.9 49.9    50 60    70.5 36.234    10 15    15 20    234 asd");
+        std::stringstream out;
+        main_assignment(in, out);
+        const char* expected =
+            "Please give coordinates in the following form: \"x y\" (without quotes), or type something else to quit:\n"
+            "No shapes were found that have point Vector(0, 0).\n"
+            "4-gon(center = Vector(40, 89.5), vertex = Vector(0, 49.5)) has point Vector(79.9, 49.9).\n"
+            "4-gon(center = Vector(104.5, 25), vertex = Vector(79.5, 0)) has point Vector(79.9, 49.9).\n"
+            "4-gon(center = Vector(40, 89.5), vertex = Vector(0, 49.5)) has point Vector(50, 60).\n"
+            "6-gon(center = Vector(65, 37), vertex = Vector(60.7, 32.7)) has point Vector(70.5, 36.234).\n"
+            "No shapes were found that have point Vector(10, 15).\n"
+            "Circle(center = Vector(15.1, 20.85), radius = 2.05) has point Vector(15, 20).\n";
+        EXPECT_STREQ(expected, out.str().c_str());
+    } ENDM
+    
+    TEST(main_assignment, eof) {
+        std::stringstream in("0 0    79.9 49.9    50");
+        std::stringstream out;
+        EXPECT_THROW(main_assignment(in, out), std::runtime_error&);
+        const char* expected =
+            "Please give coordinates in the following form: \"x y\" (without quotes), or type something else to quit:\n"
+            "No shapes were found that have point Vector(0, 0).\n"
+            "4-gon(center = Vector(40, 89.5), vertex = Vector(0, 49.5)) has point Vector(79.9, 49.9).\n"
+            "4-gon(center = Vector(104.5, 25), vertex = Vector(79.5, 0)) has point Vector(79.9, 49.9).\n";
+        EXPECT_STREQ(expected, out.str().c_str());
+    } ENDM
 }

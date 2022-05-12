@@ -1,11 +1,12 @@
 #ifndef SHAPES_H
 #define SHAPES_H
+#include "memtrace.h"
 
 #include <iostream>
 #include "vectormath.h"
 
 class Circle;
-// TODO operator== a tesztekhez
+
 class Shape {
 public:
     virtual bool has_point(Vector p) const = 0;
@@ -35,7 +36,7 @@ public:
     Circle(Vector center, Vector arc_point):
         center(center), radius(center.distance_to(arc_point)) { }
     Circle(Vector center, double radius):
-        center(center), radius(fabs(radius)) { } // TODO ezt használni gyakrabban
+        center(center), radius(fabs(radius)) { }
     
     Vector get_center() const { return center; }
     

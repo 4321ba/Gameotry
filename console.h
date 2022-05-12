@@ -5,6 +5,7 @@
  */
 #ifndef CONSOLE_H
 #define CONSOLE_H
+#include "memtrace.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
 # define _WINX 
@@ -75,11 +76,6 @@ public:
     /// @param x - vonal vízszintes kezdő pozíciója
     void hMeter(double value, double max, int width = 70,
                             const char* txt = 0, int y = 0, int x = 0);
-    
-    enum Block { BLOCK_EMPTY, BLOCK_DOWN, BLOCK_UP, BLOCK_FULL };
-    /// ad egy dobozt: " ", "▄", "▀" vagy "█"
-    static const char* getblock(Block b);
-    
 };
 
 #endif // CONSOLE_H

@@ -1,5 +1,6 @@
 #ifndef VECTORMATH_H
 #define VECTORMATH_H
+#include "memtrace.h"
 
 #include <cmath>
 #include <iostream>

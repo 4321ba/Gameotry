@@ -1,29 +1,31 @@
-// TODO helyesírás ellenőrzés
-// TODO cerr használata?
-// TODO and or not helyett && || !
-// is és os in és out helyett (iostream)
-// TODO console.cpp-ben külön opcióként szétválasztani az utf8 és cpmittoménmi kódolást, hogy windowson is lehessen tesztelni utf8-cal (tesztprogram tesztelhessen utf8 kódokkal)
-// TODO átnevezni .hpp-ről .h -ra a headeröket
-//TODO Console fallback implementáció standard c++-szal / vagy olyan fordítási opció ahol nincs szükség rá (makrómágia)
-//TODO memtrace!
+#include "memtrace.h"
+
+//TODO helyesírás ellenőrzés
+//TODO makrómágia MAIN_GAME makróval feltételes fordítása a játékoknak + consolenak
+//TODO külön cpp és h minden osztályhoz!
+//TODO doksi képek + szöveg update
+//TODO átnézni a pontozást
+//TODO clang checkvmi
+//TODO név + nkód
+//TODO -fsanitize=address
 
 #include <iostream>
 
 #include "mains.h"
 
+#if !defined(CPORTA) && !defined(MAIN_ASSIGNMENT) && !defined(MAIN_GAME)
+#error "Please define one of the macros: CPORTA (=main_test), MAIN_ASSIGNMENT or MAIN_GAME"
+#endif
+
 int main() {
     try {
-#ifndef MAIN_TEST // TODO n
-        /*int code = */main_test();
-    //     if (code != 0) {
-    //         std::cerr << "Error " << code << " occured, while testing!" << std::endl;
-    //         return code;
-    //     }
-#endif // MAIN_TEST
-#ifndef MAIN_ASSIGNMENT
-        main_assignment();
+#ifdef CPORTA // TODO n
+        main_test();
+#endif // CPORTA
+#ifdef MAIN_ASSIGNMENT
+        main_assignment(std::cin, std::cout);
 #endif // MAIN_ASSIGNMENT
-#ifndef MAIN_GAME
+#ifdef MAIN_GAME
         main_game();
 #endif // MAIN_GAME
     } catch (std::exception& e) {

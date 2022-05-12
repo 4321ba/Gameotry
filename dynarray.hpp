@@ -1,5 +1,6 @@
 #ifndef DYNARRAY_H
 #define DYNARRAY_H
+#include "memtrace.h"
 
 #include <iostream>
 #include <exception>

@@ -1,5 +1,6 @@
 #ifndef GAME_FLAPPY_BIRD_H
 #define GAME_FLAPPY_BIRD_H
+#include "memtrace.h"
 
 #include "vectormath.h"
 #include "screen.h"

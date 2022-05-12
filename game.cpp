@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include <iostream>
 #include "game.h"
 

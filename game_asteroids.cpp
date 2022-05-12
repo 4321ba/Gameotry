@@ -1,3 +1,5 @@
+#include "memtrace.h"
+
 #include "game_asteroids.h"
 
 #include <cstdlib>
@@ -58,7 +60,7 @@ bool GameAsteroids::update(double delta, Screen& screen) {
     player.update(delta);
     Vector nose_pos = player.pos + Vector::polar(player.size, player.rot);
     Polygon player_body(player.pos, nose_pos, 3);
-    Circle player_head(nose_pos, 1);// TODO circle-nek radiuszos ctor? átírás máshol is
+    Circle player_head(nose_pos, 1);
     screen.draw_shape(player_body);
     screen.draw_shape(player_head);
     
