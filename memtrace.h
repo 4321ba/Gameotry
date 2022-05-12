@@ -101,7 +101,8 @@ END_NAMESPACE
 
 #if defined(MEMTRACE_TO_MEMORY)
 START_NAMESPACE
-        int mem_check(void);
+    int mem_check(void);
+    int poi_check(void*);
 END_NAMESPACE
 #endif
 
@@ -190,7 +191,6 @@ START_NAMESPACE
 	void * traced_realloc(void * old, size_t size, const char *size_txt, int line, const char * file);
 
 	void mem_dump(void const *mem, size_t size, FILE* fp = stdout);
-
 
 END_NAMESPACE
 #endif/*MEMTRACE_C*/
