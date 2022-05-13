@@ -1,3 +1,7 @@
+/**
+ * \file vector.h
+ * Két dimenziós, lebegőpontos (double) vektor (= irányított szakasz) megvalósítása.
+ */
 #ifndef VECTOR_H
 #define VECTOR_H
 #include "memtrace.h"

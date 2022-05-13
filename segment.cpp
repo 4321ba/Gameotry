@@ -1,3 +1,7 @@
+/**
+ * \file segment.cpp
+ * A szakasz tagfüggvényei, síkgeometria / koordinátageometria.
+ */
 #include "memtrace.h"
 
 #include "segment.h"

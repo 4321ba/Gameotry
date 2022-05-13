@@ -1,3 +1,10 @@
+/**
+ * \file shape_parser.h
+ * Az alakzatbeolvasó osztály.
+ * 
+ * Saját dinamikus memóriáját kezeli, és felhasználja a dinamikus tömböt a pointerek tárolására.
+ * Adatok elérése kizárólag iterátorral, a beolvasott adatok nem módosíthatóak.
+ */
 #ifndef SHAPE_PARSER_H
 #define SHAPE_PARSER_H
 #include "memtrace.h"

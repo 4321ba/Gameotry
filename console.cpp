@@ -1,6 +1,3 @@
-#ifdef MAIN_GAME
-#include "memtrace.h"
-
 /**
  * \file: console.cpp
  * Console input/output kezelése
@@ -8,6 +5,9 @@
  *   (ncurses/pdcurses használatával hordozható lehetne! Help velcome!)
  *
  */
+#ifdef MAIN_GAME
+#include "memtrace.h"
+
 #include "console.h"
 
 #include <iostream>

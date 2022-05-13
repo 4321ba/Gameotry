@@ -1,3 +1,7 @@
+/**
+ * \file vector.cpp
+ * Kellett csinálni külön fájlt a statikus konstans adattagoknak.
+ */
 #include "memtrace.h"
 
 #include "vectormath.h"

@@ -1,3 +1,10 @@
+/**
+ * \file dynarray.hpp
+ * Sablonos dinamikus tömb megvalósítása.
+ * 
+ * Az elemek csak iterátorral érhetők el, és hozzáfűzni lehet csak, törölni nem.
+ * Ha pointer típust tárol dinamikus memóriára, akkor a használó feladata a felszabadítás.
+ */
 #ifndef DYNARRAY_H
 #define DYNARRAY_H
 #include "memtrace.h"
@@ -6,12 +13,19 @@
 #include <exception>
 #include <cstddef>
 
+/**
+ * Sablonos dinamikus tömb megvalósítása.
+ * 
+ * Az elemek csak iterátorral érhetők el, és hozzáfűzni lehet csak, törölni nem.
+ * Ha pointer típust tárol dinamikus memóriára, akkor a használó feladata a felszabadítás.
+ * Mindig duplázza a tömb hosszát, ha elfogynak a helyek.
+ */
 template <typename T>
 class DynArray {
     constexpr static size_t DEFAULT_SIZE = 4;
     
-    size_t length; // number of valid elements
-    size_t size; // size of data (there may be invalid elements at the end)
+    size_t length; ///< number of valid elements
+    size_t size; ///< size of data (there may be invalid elements at the end)
     T* data;
     
     // we don't provide these:
@@ -22,6 +36,7 @@ public:
     
     ~DynArray() { delete[] data; }
     
+    /// Hozzáfűzi az elemet a tömb végéhez. Ha túl kicsi, akkor megnyújtja. 
     void append(T appendee) {
         if (length >= size) {
             T* old_data = data;
@@ -33,14 +48,18 @@ public:
         }
         data[length++] = appendee;
     }
-    
+    /**
+     * Iterátor a sablon dinamikus tömbhöz.
+     * 
+     * A túlment iterátor dereferálását kivétellel díjazza.
+     */
     class Iterator {
         T* current;
         T* end;
     public:
         
-        // azért, hogy std::algoritmusokkal lehessen használni (pl std::equal)
         // https://stackoverflow.com/questions/59851539/no-type-named-value-type-in-struct-stditerator-traits
+        /// azért, hogy std::algoritmusokkal lehessen használni (pl std::equal)
         using difference_type = std::ptrdiff_t;
         using value_type = T;
         using pointer = T*;

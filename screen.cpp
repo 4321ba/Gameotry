@@ -1,3 +1,7 @@
+/**
+ * \file screen.cpp
+ * Alakzatkirajzoló osztály logikája, itt van a dobozok karakterkódolása is elrejtve (makró: CMDEXE_ENCODING).
+ */
 #include "memtrace.h"
 
 #include "screen.h"
@@ -6,14 +10,12 @@
 const Vector Screen::size = Vector(80.0, 50.0);
 
 bool& Screen::idx(unsigned x, unsigned y) {
-    if (x >= width || y >= height)
-        throw std::out_of_range("Screen coordinate out of range");
+    if (x >= width || y >= height) throw std::out_of_range("Screen coordinate out of range");
     return data[y * width + x];
 }
 
 bool Screen::idx(unsigned x, unsigned y) const {
-    if (x >= width || y >= height)
-        throw std::out_of_range("Screen coordinate out of range");
+    if (x >= width || y >= height) throw std::out_of_range("Screen coordinate out of range");
     return data[y * width + x];
 }
 

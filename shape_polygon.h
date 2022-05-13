@@ -1,3 +1,7 @@
+/**
+ * \file shape_polygon.h
+ * A szabályos sokszöget megvalósító osztály fájlja.
+ */
 #ifndef SHAPE_POLYGON_H
 #define SHAPE_POLYGON_H
 #include "memtrace.h"

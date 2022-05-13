@@ -1,3 +1,7 @@
+/**
+ * \file main.cpp
+ * A főprogram, ami a definiált makróknak megfelelően elindítja a kívánt maineket.
+ */
 #include "memtrace.h"
 
 //TODO helyesírás ellenőrzés
@@ -6,6 +10,8 @@
 //TODO igazi dokumentáció
 //TODO átnézni a pontozást
 //TODO név + nkód
+//TODO windows eof teszt???
+//TODO 100% coverage test, assert a nem használt exceptionok helyett
 
 #include <iostream>
 

@@ -1,3 +1,7 @@
+/**
+ * \file main_assignment.cpp
+ * A feladat által kért főprogram megvalósítása.
+ */
 #include "memtrace.h"
 
 #include <iostream>
@@ -19,7 +23,7 @@ void main_assignment(std::istream& is, std::ostream& os) {
     std::ifstream file("snake_level.txt");
     ShapeParser parser(file, outside_of_unit_circle);
     if (!file.eof())
-        throw std::runtime_error("Invalid input format in file snake_level.txt!");
+        throw std::runtime_error("Missing file, or invalid input format in snake_level.txt!");
     
     os << "Please give coordinates in the following form: \"x y\" (without quotes), or type something else to quit:" << std::endl;
     Vector v;

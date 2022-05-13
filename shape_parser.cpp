@@ -1,3 +1,7 @@
+/**
+ * \file shape_parser.cpp
+ * Az alakzatok beolvasása és newzása, illetve törlése.
+ */
 #include "memtrace.h"
 
 #include "shape_parser.h"

@@ -1,3 +1,10 @@
+/**
+ * \file shape.cpp
+ * Absztrakt síkidom ősosztály.
+ * 
+ * Az implementálók képesek megmondani, hogy egy pont bennük van-e, körrel érintkeznek-e,
+ * illetve félig képesek perzisztens viselkedésre, bár a kiírás és a beolvasás formátuma a feladat kiírásának megfelelően nem azonos.
+ */
 #ifndef SHAPE_H
 #define SHAPE_H
 #include "memtrace.h"

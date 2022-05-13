@@ -1,3 +1,9 @@
+/**
+ * \file main_game.cpp
+ * A játékprogramok futtatásáért felelős főprogram.
+ * 
+ * Csak akkor fordul bele, ha a MAIN_GAME makró definiált.
+ */
 #ifdef MAIN_GAME
 #include "memtrace.h"
 
@@ -12,7 +18,6 @@
 #include "game_flappy_bird.h"
 #include "game_snake.h"
 #include "game_asteroids.h"
-
 
 void main_game() {
     srand(time(NULL));
@@ -37,7 +42,7 @@ void main_game() {
             std::ifstream is("snake_level.txt");
             game = new GameSnake(is);
             if (!is.eof())
-                throw std::runtime_error("Invalid input format in file snake_level.txt!");
+                throw std::runtime_error("Missing file, or invalid input format in snake_level.txt!");
         }
         const double SECONDS_PER_GAME = 20.0;
         success = game->play(con, screen, SECONDS_PER_GAME);

@@ -1,3 +1,7 @@
+/**
+ * \file game.cpp
+ * Minden játék főciklusa, általánosítva.
+ */
 #ifdef MAIN_GAME
 #include "memtrace.h"
 
@@ -6,6 +10,7 @@
 
 const double max_delta = 0.1/*sec*/;
 
+/// Minden játék főciklusa, általánosítva.
 bool Game::play(Console& con, Screen& screen, double timeout) {
     clock_t previous = clock();
     double game_timeout_delta = 0.0;

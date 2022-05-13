@@ -1,3 +1,7 @@
+/**
+ * \file game_snake.cpp
+ * A játékot megvalósító függvények.
+ */
 #ifdef MAIN_GAME
 #include "memtrace.h"
 

@@ -1,3 +1,12 @@
+/**
+ * \file game_flappy_bird.h
+ * Minimális Flappy Bird implementáció.
+ * 
+ * A játékos nem érhet hozzá a plafonhoz, sem a padlóhoz, sem a tüskékhez.
+ * Egyszerre mindig két tüske van a képernyőn, egy fent, egy lent,
+ * ezek egyenletesen mozognak jobbról balra.
+ * A lyuk magassága valamennyire véletlenszerű, de a mérete állandó.
+ */
 #ifndef GAME_FLAPPY_BIRD_H
 #define GAME_FLAPPY_BIRD_H
 #include "memtrace.h"
@@ -6,6 +15,14 @@
 #include "screen.h"
 #include "game.h"
 
+/**
+ * Minimális Flappy Bird implementáció.
+ * 
+ * A játékos nem érhet hozzá a plafonhoz, sem a padlóhoz, sem a tüskékhez.
+ * Egyszerre mindig két tüske van a képernyőn, egy fent, egy lent,
+ * ezek egyenletesen mozognak jobbról balra.
+ * A lyuk magassága valamennyire véletlenszerű, de a mérete állandó.
+ */
 class GameFlappyBird: public Game {
     const Vector gravity = Vector(0, 40); // block per sec^2
     const Vector jump_speed = Vector(0, -32); // block per sec

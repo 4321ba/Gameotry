@@ -1,3 +1,7 @@
+/**
+ * \file mains.h
+ * A főprogramok deklarációja, túlzásnak éreztem volna ezekre 3 külön fejlécfájlt készíteni.
+ */
 #ifndef MAINS_H
 #define MAINS_H
 #include "memtrace.h"

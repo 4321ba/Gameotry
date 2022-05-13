@@ -1,3 +1,7 @@
+/**
+ * \file shape_polygon.cpp
+ * A szabályos sokszög bonyolultabb tagfüggvényei találhatóak itt.
+ */
 #include "memtrace.h"
 
 #include "shapes.h"

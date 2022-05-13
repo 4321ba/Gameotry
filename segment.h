@@ -1,3 +1,8 @@
+/**
+ * \file segment.h
+ * A szakasz, ami izomorf 2db 2 dimenziós ponttal, megvalósítása.
+ * Hasznos a sokszög oldalához; ahhoz, hogy egy pont az oldalon belül van-e, illetve a körrel való metszés meghatározására.
+ */
 #ifndef SEGMENT_H
 #define SEGMENT_H
 #include "memtrace.h"

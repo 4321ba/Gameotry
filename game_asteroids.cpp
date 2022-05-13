@@ -1,3 +1,7 @@
+/**
+ * \file game_asteroids.cpp
+ * Függvények megvalósítása a játékhoz.
+ */
 #ifdef MAIN_GAME
 #include "memtrace.h"
 

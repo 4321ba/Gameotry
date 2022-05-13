@@ -1,3 +1,9 @@
+/**
+ * \file main_test.cpp
+ * A tesztprogram, főprogram.
+ * 
+ * Itt valósulnak meg a unittesztek, illetve a feladat főprogram tesztje is.
+ */
 #include "memtrace.h"
 
 #include <fstream>
@@ -13,6 +19,7 @@
 
 #include "gtest_lite.h"
 
+/// Itt valósulnak meg a unittesztek, illetve a feladat főprogram tesztje is.
 void main_test() {
 
     TEST(Vector, constructor) {

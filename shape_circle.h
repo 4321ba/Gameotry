@@ -1,3 +1,7 @@
+/**
+ * \file shape_circle.h
+ * A kör alakzatot megvalósító osztály fájlja.
+ */
 #ifndef SHAPE_CIRCLE_H
 #define SHAPE_CIRCLE_H
 #include "memtrace.h"
