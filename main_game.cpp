@@ -19,6 +19,14 @@
 #include "game_snake.h"
 #include "game_asteroids.h"
 
+/**
+ * A játékprogramok futtatásáért felelős főprogram.
+ * 
+ * A 3 játék közül véletlenszerűen választ minden alkalommal, és minden játék addig tart,
+ * amíg a játékos meghal, vagy 20s letelik.
+ * Ha az idő letelt, akkor új játék indul. Meghaláskor a játszott játékok számát kiírja.
+ * A kilépés (q gomb) meghalásnak számít.
+ */
 void main_game() {
     srand(time(NULL));
     Console& con = Console::con();

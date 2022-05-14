@@ -20,6 +20,7 @@
 #include "gtest_lite.h"
 
 /// Itt valósulnak meg a unittesztek, illetve a feladat főprogram tesztje is.
+/// A játékokat, a játék főprogramot, és a Console osztályt nem tesztelem, ezeket feltételes fordítással fordítom csak bele a programba, így elkerülve a rossz coverage arányt.
 void main_test() {
 
     TEST(Vector, constructor) {

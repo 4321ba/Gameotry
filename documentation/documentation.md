@@ -168,11 +168,9 @@ A `ShapeParser` iterátora lényegében ugyanaz, mint az `array` adattagjának i
 
 Segédosztályok, a játékok megvalósításához.
 
-A `Console` osztály a [4. heti laborról](https://git.ik.bme.hu/Prog2/labor_peldak/lab_04/tree/master) származik, kiegészítve a `kbhit` és a `getsize` metódusokkal (ehhez Linuxon szükség van a `<sys/ioctl.h>` include-olására és használatára, Windowson nem szükséges extra függőség hozzájuk). Ez az osztály nem lesz szükséges a feladat által kiírt főprogram, illetve a tesztprogram fordításához, csak a játékokat tartalmazó főprogram fordításához. Valahogyan meg kell oldani azt is, hogy Windowson a terminálban a dobozkarakterek rajzolásához más kódolás kell, mint a standard UTF-8. Jelenleg a Console osztály statikus függvénye a `getblock`, amivel a platformnak megfelelő karaktersorozatot meg lehet kapni, szóköz / alsó fél / felső fél / egész dobozok közül választva.
+A `Console` osztály a [4. heti laborról](https://git.ik.bme.hu/Prog2/labor_peldak/lab_04/tree/master) származik, kiegészítve a `kbhit` és a `getsize` metódusokkal (ehhez Linuxon szükség van a `<sys/ioctl.h>` include-olására és használatára, Windowson nem szükséges extra függőség hozzájuk). Ez az osztály nem lesz szükséges a feladat által kiírt főprogram, illetve a tesztprogram fordításához, csak a játékokat tartalmazó főprogram fordításához. Valahogyan meg kell oldani azt is, hogy Windowson a terminálban a dobozkarakterek rajzolásához más kódolás kell, mint a standard UTF-8. A `screen.cpp` függvénye a `getblock`, amivel a platformnak megfelelő karaktersorozatot meg lehet kapni, szóköz / alsó fél / felső fél / egész dobozok közül választva.
 
 A Screen osztály egyik lényege, hogy bármilyen terminál felbontás esetén a játékok számára úgy néz ki, mintha 80×50 pixel volna a játéktér, így a `draw_shape` függvényének adott alakzatok ugyanazon a helyen jelennek meg minden felbontás esetén (a (40,25) pont mindig a képernyő közepe). A rajzoláshoz a terminál minden pixelét eltranszformálja, majd meghívja rá az alakzat `has_point` függvényét, így eldöntve, hogy ott jelenítsen-e meg pixelt, vagy nem.
-
-(`draw_vector` valószínűleg nem lesz használva, le lesz törölve.)
 
 ![UML ábra](ConsoleandScreen.svg)
 
@@ -306,8 +304,19 @@ void Screen::draw_shape(const Shape& shape) {
     }
 }
 ```
+## Módosítások a 2. verzióhoz képest
+
+Letörlésre kerültek a dinamikus tömb indexelő operátorai, mivel nem volt rájuk szükség. Az adatok iterátorokkal érhetők el.
+
+A karakterkódolás-függő dobozrajzoló karakterek megszerzéséért felelős `getblock` függvény átkerült a `Console`-ból a `screen.cpp` fájlba, mivel nem függött eléggé össze a platform (Linux vs Windows) és a karakterkódolás (IBM-852 vs UTF8), ugyanis a tesztprogram Windowson is UTF8-at vár. Amúgy is a használat a `Screen` osztályban történt egyedül, így oda jobban illik.
+
+A `draw_vector` metódus az előrejelzésnek megfelelően le lett törölve.
 
 # Kész program
+
+## Osztályok és algoritmusok áttekintése
+
+Lásd: Terv.
 
 ## Fordítási opciók
 
@@ -320,3 +329,7 @@ A fordítás során az alábbi makrók definiálása a következőket jelenti:
 - MAIN_GAME: bekapcsolja a játék főprogram, illetve a játékért felelős többletkód fordítását
 
 Az utóbbi 3 felhasználói szempontból egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben mind lefutni.
+
+## Doxygen által generált dokumentáció
+
+Hozzáfűzve a pdf fájl végére, mivel csak egy fájlt lehet beadni.

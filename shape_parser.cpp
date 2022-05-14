@@ -6,6 +6,8 @@
 
 #include "shape_parser.h"
 
+#include "assert.h"
+
 ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
     unsigned type; // 0: Circle, 3 or above: RegularPolygon
     while (is >> type) {
@@ -27,6 +29,10 @@ ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
 }
 
 ShapeParser::~ShapeParser() {
-    for (Shape* s: array)
-        delete s;
+    // elméletileg az iterátor dobhat exceptiont, ez a clang-tidynak nem szeretett, hogy a destruktor ezt továbbdobhatja
+    //try {
+        for (Shape* s: array)
+            delete s;
+    //} catch (...)
+    //    assert(false);
 }

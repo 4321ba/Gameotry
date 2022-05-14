@@ -11,6 +11,10 @@
 #include <iostream>
 #include "shapes.h"
 
+/**
+ * Az alakzatok lerendereléséért felelős osztály.
+ * Egy pixel 2 értéket vehet fel, tehát fekete-fehér a kép.
+ */
 class Screen {
     const unsigned width, height;
     bool* data;
@@ -22,12 +26,25 @@ class Screen {
     Screen(const Screen&);
     Screen& operator=(const Screen&);
 public:
-    /// this is what it looks like from the outside (so that it's resolution independent)
+    /// A képernyő rajzoláskor ekkorának néz ki, azért, hogy felbontásfüggetlen legyen.
+    /// Tehát például a (40,25) középpontú kör mindig a képernyő közepén lesz, függetlenül a konzol felbontásától.
     static const Vector size;
-    Screen(unsigned width, unsigned height); ///< height will be made divisible by 2
+    
+    /// A paraméterek a terminál felbontására vonatkoznak, tehát például egy 100 oszlopú, 20 sorú konzolablakra
+    /// width=100, height=40 -es Screen-t kell készíteni, ha azt akarjuk, hogy az egészet éppen befedje
+    /// A magasságot amiatt kell duplázni, mert egy karakter (doboz) 2 pixelnek felel meg (szóköz, alsó doboz, felső doboz vagy teljes doboz)
+    /// A magasság 2-vel oszthatóvá lesz téve emiatt
+    Screen(unsigned width, unsigned height);
     ~Screen() { delete[] data; }
+    
+    /// A bufferbe belerajzolja az alakzatot, figyelembe véve a virtuális és az igazi felbontás közötti összefüggést.
+    /// Lehet egymás után több alakzatot is rajzolni, ezek átfedésénél a határt közöttük utólag nem lehet megkülönböztetni.
     void draw_shape(const Shape& s);
+    
+    /// Kiírja a buffert az adatfolyamra.
     void render(std::ostream& out) const;
+    
+    /// Törli a buffer minden pixelét.
     void clear();
 };
 

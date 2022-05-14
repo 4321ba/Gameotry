@@ -10,6 +10,9 @@
 #include "vectormath.h"
 #include "shape.h"
 
+/**
+ * A szabályos sokszöget megvalósító osztály.
+ */
 class /*Regular*/Polygon: public Shape {
     Vector center;
     Vector vertex;
@@ -17,7 +20,12 @@ class /*Regular*/Polygon: public Shape {
     Segment closest_edge_to(Vector p) const;
     
 public:
+    
+    /// Majdnem default konstruktor csak az adatfolyamból beolvasás céljára, amúgy memóriaszeméttel inicializál.
+    /// @param vc vertex count, négyszög esetén 4 pl, >=3-má lesz téve
     Polygon(unsigned vc): vertex_count(vc > 3 ? vc : 3) { }
+    
+    /// @param vc vertex count, négyszög esetén 4 pl, >=3-má lesz téve
     Polygon(Vector center, Vector vertex, unsigned vc):
         center(center), vertex(vertex), vertex_count(vc > 3 ? vc : 3) { }
     

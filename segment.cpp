@@ -6,10 +6,10 @@
 
 #include "segment.h"
 
-// visszaadja, hogy bal oldalon van-e a pont, amennyiben a pozitív forgásirány
-// óramutató járásával ellenkező (azaz +y felfelé van)
-// ha óramutatóval megegyező / +y lefelé van (pl képernyő),
-// akkor azt mondja meg, hogy jobbra van-e a pont
+/// Visszaadja, hogy bal oldalon van-e a pont, amennyiben a pozitív forgásirány
+/// óramutató járásával ellenkező (azaz +y felfelé van).
+/// Ha óramutatóval megegyező / +y lefelé van (pl képernyő),
+/// akkor azt mondja meg, hogy jobbra van-e a pont.
 bool Segment::is_point_to_the_left(Vector p) const {
     // https://stackoverflow.com/questions/1560492/how-to-tell-whether-a-point-is-to-the-right-or-left-side-of-a-line
     Vector ab = b - a;
@@ -18,8 +18,8 @@ bool Segment::is_point_to_the_left(Vector p) const {
     return ab.x * ap.y - ab.y * ap.x > 0;
 }
 
-// visszaadja, hogy a szakasz mely pontja van `p`-hez legközelebb
-// a visszatérési pont mindig a szakaszon van, azaz mindig `a` és `b` között
+/// Visszaadja, hogy a szakasz mely pontja van `p`-hez legközelebb.
+/// A visszatérési pont mindig a szakaszon van, azaz mindig `a` és `b` között.
 Vector Segment::closest_point_to(Vector p) const {
     // https://stackoverflow.com/questions/3120357/get-closest-point-to-a-line
     Vector ab = b - a;

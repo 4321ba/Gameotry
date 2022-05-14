@@ -19,6 +19,13 @@ namespace {
     }
 }
 
+/**
+ * A feladat által kért főprogram megvalósítása.
+ * 
+ * A bemenetről koordinátapárokat vesz be, és a kimenetre kiírja, hogy a beolvasott fájlból mely alakzatok tartalmazzák azt a pontot.
+ * A beolvasáskor eldobja az egységkörrel érintkező alakzatokat.
+ * Paramétereket a könnyebb tesztelhetőség miatt kap.
+ */
 void main_assignment(std::istream& is, std::ostream& os) {
     std::ifstream file("snake_level.txt");
     ShapeParser parser(file, outside_of_unit_circle);

@@ -7,10 +7,10 @@
 #include "shapes.h"
 
 // returns in positive direction: seg.b is "more" in the positive dir (rotation-wise) then a
-// visszaadja, hogy a sokszög melyik oldala van az adott ponthoz legközelebb
-// a visszaadott szakasz `b` pontja a sokszög középpontjából nézve szög szempontjából
-// pozitívabb irányban van, mint a szakasz `a` pontja
-// tehát a szakasz bal oldalán van a sokszög, amennyiben a +y felfelé van
+/// Visszaadja, hogy a sokszög melyik oldala van az adott ponthoz legközelebb.
+/// A visszaadott szakasz `b` pontja a sokszög középpontjából nézve szög szempontjából
+/// pozitívabb irányban van, mint a szakasz `a` pontja,
+/// tehát a szakasz bal oldalán van a sokszög, amennyiben a +y felfelé van.
 Segment Polygon::closest_edge_to(Vector p) const {
     double angle_to_vertex = center.angle_to(vertex);
     double angle_to_point = center.angle_to(p);

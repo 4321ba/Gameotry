@@ -10,10 +10,14 @@
 #include "vectormath.h"
 #include "shape.h"
 
+/**
+ * A kör alakzatot megvalósító osztály.
+ */
 class Circle: public Shape {
     Vector center;
     double radius;
 public:
+    /// Default konstruktor csak az adatfolyamból beolvasás céljára, amúgy memóriaszeméttel inicializál.
     Circle() { }
     Circle(Vector center, Vector arc_point):
         center(center), radius(center.distance_to(arc_point)) { }
