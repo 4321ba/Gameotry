@@ -348,6 +348,23 @@ void main_test() {
             "                                                                                                    \n"
             "                                                                                                    \n";
         EXPECT_STREQ(expected, ss.str().c_str());
+        
+        // a másik irányba kitöltés (nem alul-felül használatlan terület, hanem balra-jobbra) tesztelése
+        Screen screen2(32, 16);
+        for (const Shape& s: sp3)
+            screen2.draw_shape(s);
+        std::stringstream ss2;
+        ss2 << screen2;
+        const char* expected2 = 
+            "                                \n"
+            "                ▄▄              \n"
+            "                                \n"
+            "       ▀▀                       \n"
+            "                                \n"
+            "                      ▄██▄      \n"
+            "                      ▀█▀▀      \n"
+            "                                \n";
+        EXPECT_STREQ(expected2, ss2.str().c_str());
     } ENDM
     
     TEST(main_assignment, invalid) {
