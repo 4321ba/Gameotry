@@ -29,10 +29,12 @@ ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
 }
 
 ShapeParser::~ShapeParser() {
-    // elméletileg az iterátor dobhat exceptiont, ez a clang-tidynak nem szeretett, hogy a destruktor ezt továbbdobhatja
+    // elméletileg az iterátor dobhat exceptiont, ez pedig a clang-tidynak nem tetszett, hogy a destruktor ezt továbbdobhatja
+    // ugyanakkor a catch lényegében sosem fut le, az pedig dead code-nak minősülne a code coverage szempontjából
     //try {
         for (Shape* s: array)
             delete s;
-    //} catch (...)
+    //} catch (...) {
     //    assert(false);
+    //}
 }
