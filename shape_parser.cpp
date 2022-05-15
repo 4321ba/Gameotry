@@ -6,7 +6,7 @@
 
 #include "shape_parser.h"
 
-#include "assert.h"
+//#include "assert.h"
 
 ShapeParser::ShapeParser(std::istream& is, bool (*pred)(const Shape&)) {
     unsigned type; // 0: Circle, 3 or above: RegularPolygon

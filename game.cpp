@@ -6,6 +6,7 @@
 #include "memtrace.h"
 
 #include <iostream>
+#include <ctime>
 #include "game.h"
 
 const double max_delta = 0.1/*sec*/;

@@ -49,7 +49,7 @@ például:
 
 Ahol a típus = 0 kört jelöl, a típus >= 3 szabályos n-szöget, a típus = 1 vagy 2 pedig érvénytelen formátum.
 
-Bármilyen, uintként (a típus helyén) vagy double-ként (a koordináták helyén) nem értelmezhető bemenet is érvénytelen formátum.
+Bármilyen, uint-ként (a típus helyén) vagy double-ként (a koordináták helyén) nem értelmezhető bemenet is érvénytelen formátum.
 
 Érvénytelen formátum esetén a főprogram hibaüzenettel kilép.
 
@@ -136,9 +136,9 @@ Hasonlóan a beépített típusokhoz, ezeket általában érték szerint adjuk �
 
 A feladat lényegi osztályai. A feladatnak megfelelően absztrakt ősosztályból származnak.
 
-Meggondolandó, hogy a `center: Vector` tagváltozó a közös ősben legyen-e; ennek esetleg akkor lehetne értelme, ha szükség volna eltolás függvényre, ezt akkor egyszerűbb lenne általánosan implementálni a közös ősre (és így a leszármazottaknak csak relatív pozíciót volna szabad tárolni). Viszont nem kell eltolás funkció, ekkor átláthatóbb, ha az ősosztályban nincs semmilyen adattag, sem nem tisztán virtuális tagfüggvény; és inkább, mint egy interfészként/trait-szerűségként használom az örökést.
+Meggondolandó, hogy a `center: Vector` tagváltozó a közös ősben legyen-e; ennek esetleg akkor lehetne értelme, ha szükség volna eltolás függvényre, ezt akkor egyszerűbb lenne általánosan implementálni a közös ősre (és így a leszármazottaknak csak relatív pozíciót volna szabad tárolni). Viszont nem kell eltolás funkció, ekkor átláthatóbb, ha az ősosztályban nincs semmilyen adattag, sem nem tisztán virtuális tagfüggvény; és inkább, mint egy interfészként/trait-szerűségként használom az öröklést.
 
-Megjegyzendő, hogy a Circle-nél a default konstruktor, illetve a Polygon-nál az egy int-tet (vertex count-ot) fogadó konstruktor, memóriaszeméttel inicializálják az adattagokat. Ez abból az elgondolásból van, hogy miért legyen a (0,0) középpontú kör (bal felső sarok) alapértelmezettebb, mint a (40,25) középpontú (az van a képernyő közepén a Screen osztálynak megfelelően - de erről ez az oszály nem is kell, hogy tudjon).
+Megjegyzendő, hogy a Circle-nél a default konstruktor, illetve a Polygon-nál az egy int-et (vertex count-ot) fogadó konstruktor, memóriaszeméttel inicializálják az adattagokat. Ez abból az elgondolásból van, hogy miért legyen a (0,0) középpontú kör (bal felső sarok) alapértelmezettebb, mint a (40,25) középpontú (az van a képernyő közepén a Screen osztálynak megfelelően - de erről ez az osztály nem is kell, hogy tudjon).
 
 Ilyen konstruktorra egyáltalán azért van csak szükség, hogy `istream`-ből `>>` operátorral ki lehessen olvasni az adatot, ami így a memóriaszemét helyére amúgy is bekerül. Hogyha nem kellene ilyen módon beolvasni, akkor valahogyan máshogy, például egy függvény visszatérési értékeként adnám vissza az objektumot a beolvasás eredményeként, és nem referenciaként kapná meg a függvény. Ezzel a módszerrel teljesen elkerülhető volna a nem megfelelő állapotban (akár memóriaszemetet, akár valami programozó által megadott véletlenszerű számot tartalmazó állapotban) levő objektum.
 
@@ -186,14 +186,14 @@ A `GameAsteroids` esetén picit bonyolultabb volt a helyzet, itt létrehoztam eg
 
 ## Nem triviális algoritmusok
 
-Bemutatás C++ szintaktikájú pszeudo-kódban.
+Bemutatás C++ szintaktikájú pszeudokódban.
 
 ### Szakasz tagfüggvényei
 Lényegében stackoverflow-ról.
 ```cpp
 // visszaadja, hogy bal oldalon van-e a pont, amennyiben a pozitív forgásirány
 // óramutató járásával ellenkező (azaz +y felfelé van)
-// ha óramutatóval megegyező / +y lefelé van (pl képernyő),
+// ha óramutatóval megegyező / +y lefelé van (pl. képernyő),
 // akkor azt mondja meg, hogy jobbra van-e a pont
 bool Segment::is_point_to_the_left(Vector p) const {
     // https://stackoverflow.com/questions/1560492/how-to-tell-whether-a-point-is-to-the-right-or-left-side-of-a-line
@@ -330,6 +330,95 @@ A fordítás során az alábbi makrók definiálása a következőket jelenti:
 
 Az utóbbi 3 felhasználói szempontból egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben mind lefutni.
 
+## Felhasználói dokumentáció
+
+### Feladat főprogram
+
+A feladat által kért főprogram használata (ha a fordításkor a MAIN_ASSIGNMENT makró definiálva volt):
+
+A program a bemenetről koordinátapárokat vesz be, és a kimenetre kiírja, hogy a beolvasott fájlból (snake_level.txt) mely alakzatok tartalmazzák a megadott pontot.
+A fájlból beolvasáskor eldobja az egységkörrel érintkező alakzatokat.
+
+### Játék főprogram
+
+A játék főprogram használata (ha a fordításkor a MAIN_GAME makró definiálva volt):
+
+A 3 játék (Flappy Bird, Snake, Asteroids) közül véletlenszerűen választ minden alkalommal, és minden játék addig tart,
+amíg a játékos meghal, vagy 20s letelik.
+
+Ha az idő letelt, akkor új játék indul. Meghaláskor a játszott játékok számát kiírja.
+
+A kilépés (q gomb) meghalásnak számít.
+ 
+A játékok egyszerűek, és sok minden közös bennük:
+
+- adott ideig kell túlélni (20 másodperc)
+- ennyi idő után egy másik játék jön, véletlen, hogy mi
+- az egyetlen score az egyhuzamban játszott játékok száma, ezt a program a játék végén megjeleníti, de nem menti el
+- az irányítás nyilakkal (fel-le-balra-jobbra), vagy wasd-dal történik, `q` karakterrel pedig kilép a játékos
+- a játékállás nem menthető, villámjátékokról van szó
+
+Flappy Bird:
+- Bármilyen bemenetre ugrik egyet felfelé a játékos / madár.
+- A madár sem a tüskékhez, sem a plafonhoz / padlóhoz nem érhet hozzá.
+
+Snake:
+- A kígyó nem érhet hozzá sem a falakhoz, sem az akadályokhoz, sem a farkához.
+- 4 irányba lehet fordulni, de mindig csak 90°-ot.
+- A kígyó hossza a játék során nem változik, és bigyók sincsenek, amiket össze kellene szedni.
+
+Asteroids:
+- A játékos és az aszteroidák egyenes vonalú egyenletes mozgással mozognak.
+- A játékos nem érhet hozzá az aszteroidákhoz.
+- Az aszteroidák a játéktér szélén idéződnek a játék során.
+- Ami kimegy az egyik oldalon, az a másik oldalon megjelenik (játékos és aszteroida is).
+- Az aszteroidákat nem lehet megsemmisíteni.
+
+## MinGW bug
+
+Ha a ShapeParser teszteknél az eof()-fal van baja, Windowson.
+
+Valamilyen furcsa viselkedést találtam a MinGW verziómban (gcc version 9.3-win32 20200320 (GCC)), szerencsére kiderült, hogy a thread dolgokkal volt a gond. A bug a következő volt:
+
+```cpp
+#include <fstream>
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+void f(std::istream& ifs) {
+    int i;
+    ifs >> i;
+    cout << "fben: " << ifs.good() << endl;
+}
+
+int main() {
+    // pl. a fájl ugyanaz, mint ez a cpp fájl, a lényeg, hogy ne számmal kezdődjön
+    std::ifstream ifstr("mingw_wth.txt"); 
+    cout << "elotte: " << ifstr.good() << endl;
+    f(ifstr);
+    cout << "utana: " << ifstr.good() << endl;
+}
+```
+Ekkor a következő történik a fordításkor és futtatáskor:
+```
+$ g++ mingw_wth.cpp
+$ ./a.out
+elotte: 1
+fben: 0
+utana: 0
+
+$ x86_64-w64-mingw32-g++ mingw_wth.cpp
+$ wine a.exe
+elotte: 1
+fben: 0
+utana: 1
+```
+Ugyanígy igazi Windowson (7) futtatva a Linuxon fordított a.exe-t is ugyanezt írja ki (attól függetlenül, hogy a szövegfájl ott van-e), tehát nem a Wine-nal (Windows alrendszer Linuxon) van a baj.
+
+A rendszeremen a `x86_64-w64-mingw32-g++` igazából egy link a `x86_64-w64-mingw32-g++-win32`-re, ami valamilyen más thread modelt használ, mint a `x86_64-w64-mingw32-g++-posix`. Az utóbbi használata megoldotta a problémát.
+
 ## Doxygen által generált dokumentáció
 
-Hozzáfűzve a pdf fájl végére, mivel csak egy fájlt lehet beadni.
+Hozzáfűzve ide, a pdf fájl végére, mivel csak egy fájlt lehet beadni.

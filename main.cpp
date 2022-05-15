@@ -10,8 +10,6 @@
 //TODO doxygen pdf mögécsatolás
 //TODO átnézni a pontozást
 //TODO név + nkód, readme.md-t kivenni a doxygen generálás előtt
-//TODO windows eof teszt??? !!!
-//TODO ~shapeparser exception?
 
 #include <iostream>
 
