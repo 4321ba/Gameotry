@@ -67,7 +67,8 @@ void Screen::draw_shape(const Shape& shape) {
 
 namespace {
     enum Block { BLOCK_EMPTY, BLOCK_DOWN, BLOCK_UP, BLOCK_FULL };
-    /// ad egy dobozt: " ", "▄", "▀" vagy "█"
+    // ad egy dobozt: " ", "▄", "▀" vagy "█"
+    /// ad egy dobozt: szóköz, alsó, felső, vagy teljes
     const char* getblock(Block b) {
 #ifdef CMDEXE_ENCODING
         const char *boxes[] = {" ", "\xDC", "\xDF", "\xDB"}; // IBM-852 kódolással (cmd.exe)

@@ -4,6 +4,8 @@ Ezt a programot a BME mérnökinformatikus képzés Programozás alapjai 2. tár
 
 A program standard C++-ban íródik (C++ 11-nek megfelelően), de opcionálisan használja a tárgy anyagából szerzett (és kibővített) Console osztályt, ami nem standard C++, de jobb parancssori élményt nyújt, és az interfésze jól definiált.
 
+A forráskód GPL3 alatt elérhető a [Githubon](https://github.com/4321ba/Gameotry/).
+
 # Specifikáció
 
 ## Választott feladat szövege
@@ -330,6 +332,10 @@ A fordítás során az alábbi makrók definiálása a következőket jelenti:
 
 Az utóbbi 3 felhasználói szempontból egymást kizárja, de egyszerre bekapcsolás esetén képesek ebben a sorrendben mind lefutni.
 
+## Fordítás
+
+Fordításhoz használható a `compile.sh` (Linuxra) illetve a `windows_compile.sh` (Windowsra) Linux rendszer alatt. Például a játék főprogram fordítása memtrace-szel Linuxra: `./compile.sh -DMAIN_GAME -DMEMTRACE`.
+
 ## Felhasználói dokumentáció
 
 ### Feladat főprogram
@@ -417,7 +423,7 @@ utana: 1
 ```
 Ugyanígy igazi Windowson (7) futtatva a Linuxon fordított a.exe-t is ugyanezt írja ki (attól függetlenül, hogy a szövegfájl ott van-e), tehát nem a Wine-nal (Windows alrendszer Linuxon) van a baj.
 
-A rendszeremen a `x86_64-w64-mingw32-g++` igazából egy link a `x86_64-w64-mingw32-g++-win32`-re, ami valamilyen más thread modelt használ, mint a `x86_64-w64-mingw32-g++-posix`. Az utóbbi használata megoldotta a problémát.
+A rendszeremen a `x86_64-w64-mingw32-g++` igazából egy link a `x86_64-w64-mingw32-g++-win32`-re, ami valamilyen más thread modellt használ, mint a `x86_64-w64-mingw32-g++-posix`. Az utóbbi használata megoldotta a problémát.
 
 ## Doxygen által generált dokumentáció
 

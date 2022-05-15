@@ -4,13 +4,6 @@
  */
 #include "memtrace.h"
 
-//TODO helyesírás ellenőrzés
-//TODO doksi képek + szöveg update
-//TODO igazi dokumentáció
-//TODO doxygen pdf mögécsatolás
-//TODO átnézni a pontozást
-//TODO név + nkód, readme.md-t kivenni a doxygen generálás előtt
-
 #include <iostream>
 
 #include "mains.h"
