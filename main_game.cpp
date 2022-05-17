@@ -52,6 +52,11 @@ void main_game() {
             if (!is.eof())
                 throw std::runtime_error("Missing file, or invalid input format in snake_level.txt!");
         }
+        GameAsteroids* test = dynamic_cast<GameAsteroids*>(game);
+        if (test != nullptr) {
+            std::cout << "Asteroids incoming! Press enter to continue!" << std::endl;
+            getchar();
+        }
         const double SECONDS_PER_GAME = 20.0;
         success = game->play(con, screen, SECONDS_PER_GAME);
         delete game;

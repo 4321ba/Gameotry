@@ -6,6 +6,8 @@
 #define MAINS_H
 #include "memtrace.h"
 
+#include <iostream>
+
 void main_test();
 void main_assignment(std::istream& is, std::ostream& os);
 void main_game();
